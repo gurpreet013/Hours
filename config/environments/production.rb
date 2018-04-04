@@ -75,6 +75,7 @@ Hours::Application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = SMTP_SETTINGS
   config.action_mailer.default_url_options = { host: 'vinsol-resource-management.herokuapp.com' }
+  Rails.application.routes.default_url_options[:host] = "vinsol-resource-management.herokuapp.com"
   config.log_level = :debug
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
