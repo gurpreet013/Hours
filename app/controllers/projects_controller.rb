@@ -1,8 +1,10 @@
 include TimeSeriesInitializer
 
 class ProjectsController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy], if: :current_user
+
   def index
-    @projects = Project.unarchived.by_last_updated.page(params[:page]).per(7)
+    @projects = current_user.projects.unarchived.by_last_updated.page(params[:page]).per(7)
     @hours_entry = Hour.new
     @mileages_entry = Mileage.new
     @activities = Hour.by_last_created_at.limit(30)

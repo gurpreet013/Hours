@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  before_action :authenticate_admin!, if: :current_user
   before_action :find_category, only: [:edit, :update]
 
   def index
