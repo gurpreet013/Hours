@@ -43,6 +43,7 @@ $(document).ready(function() {
     on('click', 'div', function(e) { e.stopPropagation();
   });
 
+  $('.select2').select2();
   $('#hour_project_id').select2();
   $('#hour_category_id').select2();
   $('#mileage_project_id').select2();
