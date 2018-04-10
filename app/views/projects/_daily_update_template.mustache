@@ -14,13 +14,13 @@
     <tbody>
     {{#projects}}
       <tr class='project-row'>
-        <td colspan='8'>{{name}}</td>
+        <td colspan='8'>{{name}} <span class='add-category'><i class="fa fa-plus-circle"></i></span></td>
       </tr>
       {{#categories}}
         <tr>
         <td>{{name}}</td>
         {{#hours}}
-          <td>{{value}}</td>
+          <td><input type='number' value='{{value}}'/></td>
         {{/hours}}
         </tr>
       {{/categories}}
@@ -33,7 +33,7 @@
           Description
         </td>
         {{#dailyUpdates}}
-          <td>{{description}}</td>
+          <td><textarea value='{{description}}'/></td>
         {{/dailyUpdates}}
       </tr>
     </tfoot>
