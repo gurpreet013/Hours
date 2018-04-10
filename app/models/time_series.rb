@@ -46,6 +46,6 @@ class TimeSeries
 
   def hours_per_day
     @hours_per_day ||=
-      @resource.hours.order("DATE(date)").group("DATE(date)").sum(:value)
+      @resource.hours.order("DATE(daily_updates.date)").group("DATE(daily_updates.date)").sum(:value)
   end
 end
