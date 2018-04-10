@@ -1,0 +1,42 @@
+<script id="daily_update_template" type="x-tmpl-mustache">
+<div class='table-responsive'>
+  <table class=''>
+    <thead class='daily-update-header'>
+      <tr>
+        <td>
+          Projects
+        </td>
+        {{#dates}}
+          <td>{{.}}</td>
+        {{/dates}}
+      </tr>
+    </thead>
+    <tbody>
+    {{#projects}}
+      <tr class='project-row'>
+        <td colspan='8'>{{name}}</td>
+      </tr>
+      {{#categories}}
+        <tr>
+        <td>{{name}}</td>
+        {{#hours}}
+          <td>{{value}}</td>
+        {{/hours}}
+        </tr>
+      {{/categories}}
+    {{/projects}}
+    </tbody>
+    <tfoot>
+      <tr></tr>
+      <tr>
+        <td>
+          Description
+        </td>
+        {{#dailyUpdates}}
+          <td>{{description}}</td>
+        {{/dailyUpdates}}
+      </tr>
+    </tfoot>
+  </table>
+</div>
+</script>

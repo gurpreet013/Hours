@@ -20,7 +20,7 @@ end
 
 Hours::Application.routes.draw do
   if Hours.single_tenant_mode?
-    root "projects#index"
+    root "projects#new_index"
     draw :subdomain_present
     draw :subdomain_blank
   else

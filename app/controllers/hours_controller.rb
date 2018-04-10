@@ -1,12 +1,13 @@
 class HoursController < EntriesController
   def create
-    @entry = Hour.new(entry_params)
-    @entry.user = current_user
-
-    if @entry.save
+    daily_update = current_user.daily_updates.find_or_initialize_by(date: entry_params[:date])
+    daily_update.description = entry_params[:description]
+    hour = Hour.new(entry_params)
+    hour.daily_update = daily_update
+    if hour.save
       redirect_to root_path, notice: t("entry_created.hours")
     else
-      redirect_to root_path, notice: @entry.errors.full_messages.join(". ")
+      redirect_to root_path, notice: daily_update.errors.full_messages.join(". ")
     end
   end
 

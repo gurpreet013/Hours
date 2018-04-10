@@ -1,0 +1,16 @@
+<%= javascript_include_tag 'bulk_daily_update_manager' %>
+<%= render 'daily_update_template.mustache' %>
+<div class='container'>
+  <h4><%= current_user.full_name.humanize %> Weekly Timesheet</h2>
+  <% current_week = Date.current.all_week %>
+  <h5 data-from='<%= current_week.first %>' data-to='<%= current_week.last %>' id='current_week'><%= current_week.to_s %></h3>
+  <p class="week-nav">
+    <% previous_week = (Date.current - 1.week).all_week %>
+    <% next_week = (Date.current + 1.week).all_week %>
+    <%= link_to 'Previous week | ', 'javascript:void(0)', id: 'previous_week', data: { from: previous_week.first, to: previous_week.last }%>
+    <%= link_to ' Next week', 'javascript:void(0)', id: 'next_week', data: { from: next_week.first, to: next_week.last } %>
+  </p>
+
+  <div id='daily_entry_template'>
+  </div>
+</div>

@@ -11,6 +11,7 @@
 //= require billables
 //= require date-formatter
 //= require feed
+//= require mustache.min.js
 //= require_tree .
 
 
