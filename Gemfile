@@ -14,6 +14,7 @@ gem "neat"
 gem "bitters"
 gem "pg"
 gem "rack-timeout"
+gem 'tickspot-rb', require: 'tickspot'
 gem "rails", "~> 4.2.10"
 gem "recipient_interceptor"
 gem "sass-rails", "~> 5.0.1"
@@ -60,6 +61,7 @@ group :development do
   gem "pry"
   gem "spring"
   gem "spring-commands-rspec"
+  gem 'byebug'
 end
 
 group :development, :test do

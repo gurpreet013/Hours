@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404160430) do
+ActiveRecord::Schema.define(version: 20180410051945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,16 @@ ActiveRecord::Schema.define(version: 20180404160430) do
     t.datetime "updated_at"
   end
 
+  create_table "category_projects", force: :cascade do |t|
+    t.integer  "category_id"
+    t.integer  "project_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "category_projects", ["category_id"], name: "index_category_projects_on_category_id", using: :btree
+  add_index "category_projects", ["project_id"], name: "index_category_projects_on_project_id", using: :btree
+
   create_table "clients", force: :cascade do |t|
     t.string   "name",              default: "", null: false
     t.string   "description",       default: ""
@@ -62,6 +72,16 @@ ActiveRecord::Schema.define(version: 20180404160430) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "daily_updates", force: :cascade do |t|
+    t.date     "date"
+    t.text     "description"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "daily_updates", ["user_id"], name: "index_daily_updates_on_user_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -80,37 +100,37 @@ ActiveRecord::Schema.define(version: 20180404160430) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "hours", force: :cascade do |t|
-    t.integer  "project_id",                  null: false
-    t.integer  "category_id",                 null: false
-    t.integer  "user_id",                     null: false
-    t.integer  "value",                       null: false
-    t.date     "date",                        null: false
+    t.integer  "project_id",                      null: false
+    t.integer  "category_id",                     null: false
+    t.integer  "value",                           null: false
+    t.date     "date",                            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
-    t.boolean  "billed",      default: false
+    t.boolean  "billed",          default: false
+    t.integer  "daily_update_id"
   end
 
   add_index "hours", ["billed"], name: "index_hours_on_billed", using: :btree
   add_index "hours", ["category_id"], name: "index_hours_on_category_id", using: :btree
+  add_index "hours", ["daily_update_id"], name: "index_hours_on_daily_update_id", using: :btree
   add_index "hours", ["date"], name: "index_hours_on_date", using: :btree
   add_index "hours", ["project_id"], name: "index_hours_on_project_id", using: :btree
-  add_index "hours", ["user_id"], name: "index_hours_on_user_id", using: :btree
 
   create_table "mileages", force: :cascade do |t|
-    t.integer  "project_id",                 null: false
-    t.integer  "user_id",                    null: false
-    t.integer  "value",                      null: false
-    t.date     "date",                       null: false
-    t.boolean  "billed",     default: false
+    t.integer  "project_id",                      null: false
+    t.integer  "value",                           null: false
+    t.date     "date",                            null: false
+    t.boolean  "billed",          default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "daily_update_id"
   end
 
   add_index "mileages", ["billed"], name: "index_mileages_on_billed", using: :btree
+  add_index "mileages", ["daily_update_id"], name: "index_mileages_on_daily_update_id", using: :btree
   add_index "mileages", ["date"], name: "index_mileages_on_date", using: :btree
   add_index "mileages", ["project_id"], name: "index_mileages_on_project_id", using: :btree
-  add_index "mileages", ["user_id"], name: "index_mileages_on_user_id", using: :btree
 
   create_table "project_users", force: :cascade do |t|
     t.integer  "user_id"

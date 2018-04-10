@@ -26,7 +26,8 @@ class Project < ActiveRecord::Base
   has_many :mileages
   has_many :project_users
   has_many :users, through: :project_users
-  has_many :categories, -> { uniq }, through: :hours
+  has_many :category_projects, dependent: :destroy
+  has_many :categories, through: :category_projects
   has_many :tags, -> { uniq }, through: :hours
   belongs_to :client, touch: true
 
