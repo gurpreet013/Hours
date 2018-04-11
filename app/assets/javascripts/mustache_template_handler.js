@@ -11,6 +11,8 @@ MustacheTemplateHandler.prototype.display = function() {
   var rendered = Mustache.render(template, this.data, (this.options.templates || {}));
   if(this.options.replaceWith) {
     $(this.target).replaceWith(rendered);
+  } else if (this.options.after) {
+    $(this.target).after(rendered);
   } else {
     $(this.target).html(rendered);
   }

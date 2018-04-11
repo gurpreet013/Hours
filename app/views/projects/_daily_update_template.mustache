@@ -14,16 +14,11 @@
     <tbody>
     {{#projects}}
       <tr class='project-row'>
-        <td colspan='8'>{{name}} <span class='add-category'><i class="fa fa-plus-circle"></i></span></td>
+        <td colspan='8'>{{name}} <span class='add_category' data-project-id={{id}}><i class="fa fa-plus-circle"></i></span></td>
       </tr>
-      {{#categories}}
-        <tr>
-        <td>{{name}}</td>
-        {{#hours}}
-          <td><input type='number' value='{{value}}'/></td>
-        {{/hours}}
-        </tr>
-      {{/categories}}
+      {{#currentWeekCategories}}
+        {{> category_row }}
+      {{/currentWeekCategories}}
     {{/projects}}
     </tbody>
     <tfoot>

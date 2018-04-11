@@ -12,6 +12,8 @@
 //= require date-formatter
 //= require feed
 //= require mustache.min.js
+//= require jquery-ui.min.js
+//= require bootstrap.bundle.min.js
 //= require_tree .
 
 

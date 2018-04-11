@@ -1,5 +1,3 @@
-//= require daily_updates/view_builder.js
-
 function DailyUpdatesManager() {
   this.payload = {};
 
@@ -51,9 +49,21 @@ DailyUpdatesManager.prototype.fetchWeekUpdates = function() {
 };
 
 DailyUpdatesManager.prototype.successHandler = function(data) {
-  this.viewBuilder = new DailyUpdatesViewBuilder(data);
+  var dateRange = getDates(new Date(data.range.from), new Date(data.range.to));
+  this.viewBuilder = new DailyUpdatesViewBuilder(data, dateRange);
   this.viewBuilder.generate();
+  this.initializeOrUpdateViewModifier(data.projects, dateRange);
 };
+
+DailyUpdatesManager.prototype.initializeOrUpdateViewModifier = function(projects, dateRange) {
+  var projectsHash = arrayToHash(projects);
+  if(this.viewModifier) {
+    this.viewModifier.updateData(projectsHash, dateRange);
+  } else {
+    this.viewModifier = new DailyUpdatesViewModifier(projectsHash, dateRange);
+    this.viewModifier.init();
+  }
+}
 
 $(function() {
   var bulkDailyUpdateManager = new DailyUpdatesManager();

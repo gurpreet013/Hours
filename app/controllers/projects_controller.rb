@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
     @to = parse_date(params[:to]) || default_range.last
     @daily_update_scope = @from && @to ? current_user.daily_updates.between(@from, @to) : current_user.daily_updates.current_week
     @daily_updates = @daily_update_scope.includes(hours: :category)
-    @projects = current_user.projects.unarchived
+    @projects = current_user.projects.unarchived.includes(:categories)
     respond_to do |format|
       format.html
       format.js { render json: projects_json_data }
@@ -71,7 +71,7 @@ class ProjectsController < ApplicationController
   end
 
   def projects_json_data
-    project_hash = catgeories_grouped_by_project
+    project_hash = categories_grouped_by_project
     {
       projects: ActiveModel::Serializer::CollectionSerializer.new(@projects, serializer: ProjectsSerializer, project_hash: project_hash),
       hours: @daily_updates.map(&:hours).flatten,
@@ -80,7 +80,7 @@ class ProjectsController < ApplicationController
     }
   end
 
-  def catgeories_grouped_by_project
+  def categories_grouped_by_project
     project_hash = Hash.new { |hash, key| hash[key] = [] }
     @daily_updates.each do |daily_update|
       daily_update.hours.each do |hour|

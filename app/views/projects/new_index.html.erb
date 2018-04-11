@@ -1,5 +1,3 @@
-<%= javascript_include_tag 'daily_updates/manager' %>
-<%= render 'daily_update_template.mustache' %>
 <div class='container'>
   <h4><%= current_user.full_name.humanize %> Weekly Timesheet</h2>
   <% current_week = Date.current.all_week %>
@@ -13,4 +11,10 @@
 
   <div id='daily_entry_template'>
   </div>
+  <div class='text-center'>
+    <button class="submit btn btn-warning">Submit</button>
+  </div>
 </div>
+
+<%= render 'category_row.mustache' %>
+<%= render 'daily_update_template.mustache' %>

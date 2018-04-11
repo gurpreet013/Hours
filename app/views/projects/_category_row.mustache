@@ -1,0 +1,15 @@
+<script id="category_row" type="x-tmpl-mustache">
+  <tr>
+    {{#name}}
+      <td>{{name}}</td>
+    {{/name}}
+    {{^name}}
+      <td>
+        <input id="scrollable-dropdown-menu" type="text" placeholder="Categories">
+      </td>
+    {{/name}}
+    {{#hours}}
+      <td data-project-id='{{project_id}}' data-category-id='{{category_id}}' data-hour-id='{{id}}' data-date='{{date}}'><input type='number' value='{{value}}'/></td>
+    {{/hours}}
+  </tr>
+</script>
