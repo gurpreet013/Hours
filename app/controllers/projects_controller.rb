@@ -14,7 +14,8 @@ class ProjectsController < ApplicationController
     @from = parse_date(params[:from]) || default_range.first
     @to = parse_date(params[:to]) || default_range.last
     @daily_update_scope = @from && @to ? current_user.daily_updates.between(@from, @to) : current_user.daily_updates.current_week
-    @daily_updates = @daily_update_scope.includes(hours: :category)
+    @daily_updates = @daily_update_scope.includes(:hours)
+
     @projects = current_user.projects.unarchived.includes(:categories)
     respond_to do |format|
       format.html
@@ -82,10 +83,10 @@ class ProjectsController < ApplicationController
 
   def categories_grouped_by_project
     project_hash = Hash.new { |hash, key| hash[key] = [] }
-    @daily_updates.each do |daily_update|
-      daily_update.hours.each do |hour|
-        project_hash[hour.project_id] << { name: hour.category.name, id: hour.category_id }
-      end
+    all_user_used_tasks = current_user.daily_updates.joins(hours: [:category, :project]).merge(Project.unarchived)
+                                      .select(:project_id, :category_id, :'categories.name').uniq
+    all_user_used_tasks.each do |task|
+      project_hash[task.project_id] << { name: task.name, id: task.category_id }
     end
     project_hash
   end

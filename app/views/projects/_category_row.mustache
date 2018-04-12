@@ -5,12 +5,14 @@
     {{/name}}
     {{^name}}
       <td class='scrollable-dropdown-menu'>
-        <input id="category_input" type="text" placeholder="Categories">
+        <input id="category_input" class='category-td' type="text" placeholder="Categories">
         <span class='minus-row'><i class="fa fa-minus"></i></span>
       </td>
     {{/name}}
     {{#hours}}
-      <td data-project-id='{{project_id}}' data-category-id='{{category_id}}' data-hour-id='{{id}}' data-date='{{date}}'><input type='number' value='{{value}}'/></td>
+      <td>
+        <input type='number' class='hours-td' data-project-id='{{project_id}}' data-category-id='{{category_id}}' data-hour-id='{{id}}' data-date='{{date}}' value='{{value}}'/>
+      </td>
     {{/hours}}
   </tr>
 </script>

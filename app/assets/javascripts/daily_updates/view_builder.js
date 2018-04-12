@@ -25,7 +25,7 @@ DailyUpdatesViewBuilder.prototype.buildHoursData = function(category, project) {
   var _this = this;
   return this.dateRange.map(function(date) {
     var obj = _this.data.hours.find(function(hour) { return hour.category_id == category.id && project.id == hour.project_id && moment(date).format('YYYY-MM-DD') == _this.dailyUpdateHash[hour.daily_update_id].date })
-    return obj || { value: 0, id: null, date: null, project_id: null, category_id: null };
+    return obj || { value: 0, id: null, date: moment(date).format('YYYY-MM-DD'), project_id: project.id, category_id: category.id };
   });
 };
 

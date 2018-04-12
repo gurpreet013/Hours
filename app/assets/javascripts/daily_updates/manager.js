@@ -53,6 +53,7 @@ DailyUpdatesManager.prototype.successHandler = function(data) {
   this.viewBuilder = new DailyUpdatesViewBuilder(data, dateRange);
   this.viewBuilder.generate();
   this.initializeOrUpdateViewModifier(data.projects, dateRange);
+  this.initializeOrUpdateBulkUpdateFormManager(dateRange);
 };
 
 DailyUpdatesManager.prototype.initializeOrUpdateViewModifier = function(projects, dateRange) {
@@ -62,6 +63,15 @@ DailyUpdatesManager.prototype.initializeOrUpdateViewModifier = function(projects
   } else {
     this.viewModifier = new DailyUpdatesViewModifier(projectsHash, dateRange);
     this.viewModifier.init();
+  }
+}
+
+DailyUpdatesManager.prototype.initializeOrUpdateBulkUpdateFormManager = function(dateRange) {
+  if(this.bulkUpdateFormManager) {
+    this.bulkUpdateFormManager.updateDateRange(dateRange);
+  } else {
+    this.bulkUpdateFormManager = new BulkUpdateFormManager(dateRange);
+    this.bulkUpdateFormManager.init();
   }
 }
 

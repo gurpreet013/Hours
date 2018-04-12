@@ -28,6 +28,7 @@ class Project < ActiveRecord::Base
   has_many :users, through: :project_users
   has_many :category_projects, dependent: :destroy
   has_many :categories, through: :category_projects
+  has_many :used_tasks, -> { uniq }, through: :hours, source: :category
   has_many :tags, -> { uniq }, through: :hours
   belongs_to :client, touch: true
 

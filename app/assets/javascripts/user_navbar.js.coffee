@@ -1,9 +1,8 @@
 jQuery ->
   $("#user-nav").click (event) ->
     event.stopPropagation()
-    $(".dropdown-content").toggle()
-    $(".dropdown-arrow").toggle()
+    $(".dropdown-content-link").toggle()
+    $(".dropdown-arrow-link").toggle()
   $("html").click ->
-    $(".dropdown-content").hide()
-    $(".dropdown-arrow").hide()
-
+    $(".dropdown-content-link").hide()
+    $(".dropdown-arrow-link").hide()

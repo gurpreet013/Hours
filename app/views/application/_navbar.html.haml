@@ -10,9 +10,9 @@
           %a{:href => "javascript:void(0)"}
             = current_user.first_name
             %span.caret
-          .dropdown-menu
-            .dropdown-arrow
-            .dropdown-content
+          .dropdown-custom-menu
+            .dropdown-arrow-link
+            .dropdown-content-link
               .user-info
                 = render "application/avatar", user: current_user, easter: easter?
                 %span.user-name= current_user.first_name
