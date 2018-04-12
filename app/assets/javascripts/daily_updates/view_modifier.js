@@ -10,6 +10,8 @@ DailyUpdatesViewModifier.prototype.init = function() {
 DailyUpdatesViewModifier.prototype.bindEvent = function() {
   var _this = this;
   $('body').on('click', '.add_category', _this.addCategoryButtonHandler.bind(_this))
+  $('body').on('click', '.minus-row', _this.removeCategoryRowHandler.bind(_this))
+
 };
 
 DailyUpdatesViewModifier.prototype.addCategoryButtonHandler = function(e) {
@@ -20,9 +22,15 @@ DailyUpdatesViewModifier.prototype.addCategoryButtonHandler = function(e) {
   this.bindAutoCompleteEvent(projectId);
 };
 
+DailyUpdatesViewModifier.prototype.removeCategoryRowHandler = function(e) {
+  var currentTarget = $(e.currentTarget),
+      parentTr =  currentTarget.parents('tr');
+  parentTr.remove()
+};
+
 DailyUpdatesViewModifier.prototype.bindAutoCompleteEvent = function(projectId) {
   var categories = this.projectsHash[projectId].categories.map(function(category) { return category.name });
-  $('#scrollable-dropdown-menu').autocomplete({ source: categories });
+  $('#category_input').autocomplete({ source: categories });
 }
 
 DailyUpdatesViewModifier.prototype.templateData = function(projectId) {

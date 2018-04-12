@@ -6,6 +6,11 @@ resources :projects, only: [:index, :edit, :new, :update, :create, :show] do
   end
   resources :audits, only: [:index]
 end
+resources :daily_updates, except: :all do
+  collection do
+    post :bulk_update
+  end
+end
 resources :categories, only: [:index, :create, :edit, :update]
 resources :entries, only: [:index]
 

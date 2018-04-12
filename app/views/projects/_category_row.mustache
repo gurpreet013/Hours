@@ -4,8 +4,9 @@
       <td>{{name}}</td>
     {{/name}}
     {{^name}}
-      <td>
-        <input id="scrollable-dropdown-menu" type="text" placeholder="Categories">
+      <td class='scrollable-dropdown-menu'>
+        <input id="category_input" type="text" placeholder="Categories">
+        <span class='minus-row'><i class="fa fa-minus"></i></span>
       </td>
     {{/name}}
     {{#hours}}
