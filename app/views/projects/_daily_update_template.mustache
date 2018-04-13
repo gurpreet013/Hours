@@ -1,20 +1,20 @@
 <script id="daily_update_template" type="x-tmpl-mustache">
 <div class='table-responsive'>
-  <table class=''>
-    <thead class='daily-update-header'>
-      <tr>
-        <td>
+  <table class='table table-sm table-bordered table-hover'>
+    <thead>
+      <tr class='daily-update-header'>
+        <th class="align-middle">
           Projects
-        </td>
+        </th>
         {{#dates}}
-          <td>{{.}}</td>
+          <th class="text-center">{{.}}<br><small>Mon</small></th>
         {{/dates}}
       </tr>
     </thead>
     <tbody>
     {{#projects}}
       <tr class='project-row'>
-        <td colspan='8'>{{name}} <span class='add_category' data-project-id={{id}}><i class="fa fa-plus-circle"></i></span></td>
+        <th colspan='8'>{{name}} <span class='add_category pull-right btn btn-info btn-sm' data-project-id={{id}}>Add Task</span></th>
       </tr>
       {{#currentWeekCategories}}
         {{> category_row }}
@@ -22,13 +22,16 @@
     {{/projects}}
     </tbody>
     <tfoot>
-      <tr></tr>
       <tr>
         <td>
-          Description
+          <small>
+            <b>
+              Description
+            </b>
+          </small>
         </td>
         {{#dailyUpdates}}
-          <td><textarea class='td-description' data-date='{{date}}'>{{description}}</textarea></td>
+          <td><textarea class='td-description form-control form-control-sm' data-date='{{date}}'>{{description}}</textarea></td>
         {{/dailyUpdates}}
       </tr>
     </tfoot>

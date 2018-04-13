@@ -43,6 +43,7 @@ DailyUpdatesViewModifier.prototype.bindAutoCompleteEvent = function(projectId) {
       $(this).parents('tr').find('input[type="number"]').data('categoryId', ui.item.id)
     }
   });
+  $('#category_input').focus();
 }
 
 DailyUpdatesViewModifier.prototype.templateData = function(projectId) {
@@ -53,13 +54,15 @@ DailyUpdatesViewModifier.prototype.templateData = function(projectId) {
 };
 
 DailyUpdatesViewModifier.prototype.hourDefaultData = function(projectId) {
-  return this.dateRange.map(function(date) {
+  var _this = this;
+  return this.dateRange.map(function(date, index) {
     return {
       id: null,
       date: moment(date).format('YYYY-MM-DD'),
       project_id: projectId,
       category_id: null,
-      value: 0
+      value: 0,
+      minusRequiredClass: (index + 1 == _this.dateRange.length) ? 'last-td' : ''
     }
   })
 }

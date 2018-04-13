@@ -1,17 +1,22 @@
 <script id="category_row" type="x-tmpl-mustache">
   <tr>
     {{#name}}
-      <td>{{name}}</td>
+      <td>
+        <small><b>{{name}}</b></small>
+      </td>
     {{/name}}
     {{^name}}
-      <td class='scrollable-dropdown-menu'>
-        <input id="category_input" class='category-td' type="text" placeholder="Categories">
-        <span class='minus-row'><i class="fa fa-minus"></i></span>
+      <td class='scrollable-dropdown-menu '>
+          <input id="category_input" class='form-control-plaintext category-td form-control-sm' type="text" placeholder="Categories">
       </td>
     {{/name}}
     {{#hours}}
-      <td>
-        <input type='number' class='hours-td' data-project-id='{{project_id}}' data-category-id='{{category_id}}' data-hour-id='{{id}}' data-date='{{date}}' value='{{value}}'/>
+      <td class='{{minusRequiredClass}}'>
+        {{#minusRequiredClass}}
+          <a href="javascript:void(0);" class='minus-row text-danger pull-right'><i class="fa fa-minus-circle"></i></a>
+        {{/minusRequiredClass}}
+        <input type='number' class='form-control-plaintext hours-td form-control-sm form-control' data-project-id='{{project_id}}' data-category-id='{{category_id}}' data-hour-id='{{id}}' data-date='{{date}}' value='{{value}}'/>
+
       </td>
     {{/hours}}
   </tr>

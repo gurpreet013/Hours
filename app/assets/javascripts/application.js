@@ -90,3 +90,5 @@ var enableBillableCheckbox = function () {
   var disable = $("#project_client_id").val() === "";
   $("#project_billable").prop("disabled", disable);
 }
+
+$('form').addClass('form-control-form');
