@@ -16,13 +16,34 @@ DailyUpdatesManager.prototype.bindEvents = function() {
 };
 
 DailyUpdatesManager.prototype.weekChangeHandler = function(e) {
-  var currentTarget = $(e.currentTarget),
-      previousWeekElement = $('#previous_week'),
+  var currentTarget = $(e.currentTarget), _this = this;
+  if(!this.inputFieldChangeDetector || !this.inputFieldChangeDetector.isInputFieldChanged || this.force) {
+    this.payload = currentTarget.data();
+    this.fetchWeekUpdates();
+    this.changeWeekHeader(currentTarget);
+    _this.force = false;
+  } else {
+      swal({
+        title: "Are you sure?",
+        text: "Your Changes are not saved yet.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger sweetalert-btn",
+        cancelButtonClass: 'sweetalert-btn',
+        confirmButtonText: "Discard",
+        closeOnConfirm: true
+      },
+      function() {
+        _this.force = true;
+        currentTarget.trigger('click');
+      });
+  }
+}
+
+DailyUpdatesManager.prototype.changeWeekHeader = function(currentTarget) {
+  var previousWeekElement = $('#previous_week'),
       nextWeekElement = $('#next_week'),
       data = {}
-
-  this.payload = currentTarget.data();
-  this.fetchWeekUpdates();
   if(currentTarget.attr('id') == 'previous_week') {
     data['previous_week'] = { 'from': moment(this.payload['from']).subtract(7, 'days')._d, 'to': moment(this.payload['to']).subtract(7, 'days')._d }
     data['next_week'] = { 'from': moment(this.payload['from']).add(7, 'days')._d, 'to': moment(this.payload['to']).add(7, 'days')._d }
@@ -54,6 +75,8 @@ DailyUpdatesManager.prototype.successHandler = function(data) {
   this.viewBuilder.generate();
   this.initializeOrUpdateViewModifier(data.projects, dateRange);
   this.initializeOrUpdateBulkUpdateFormManager(dateRange);
+  this.inputFieldChangeDetector = new InputFieldChangeDetector();
+  this.inputFieldChangeDetector.init();
 };
 
 DailyUpdatesManager.prototype.initializeOrUpdateViewModifier = function(projects, dateRange) {

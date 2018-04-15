@@ -23,9 +23,10 @@ DailyUpdatesViewBuilder.prototype.templateData = function() {
 
 DailyUpdatesViewBuilder.prototype.buildHoursData = function(category, project) {
   var _this = this;
-  return this.dateRange.map(function(date) {
+  return this.dateRange.map(function(date, index) {
     var obj = _this.data.hours.find(function(hour) { return hour.category_id == category.id && project.id == hour.project_id && moment(date).format('YYYY-MM-DD') == _this.dailyUpdateHash[hour.daily_update_id].date })
-    return obj || { value: 0, id: null, date: moment(date).format('YYYY-MM-DD'), project_id: project.id, category_id: category.id };
+    obj = obj || { value: 0, id: null, date: moment(date).format('YYYY-MM-DD'), project_id: project.id, category_id: category.id };
+    return $.extend(obj, { hoursName: 'hour_' + index + '_' + category.id + '_' + project.id })
   });
 };
 
@@ -53,9 +54,10 @@ DailyUpdatesViewBuilder.prototype.buildProjectsData = function() {
 
 DailyUpdatesViewBuilder.prototype.buildDailyUpdatesData = function() {
   var _this = this;
-  return this.dateRange.map(function(date) {
+  return this.dateRange.map(function(date, index) {
     var obj = _this.data.daily_updates.find(function(daily_update) { return daily_update.date == moment(date).format('YYYY-MM-DD') });
-    return obj || { description: 'NA', date: date };
+    obj = obj || { description: 'NA', date: date };
+    return $.extend(obj, {descriptionName: 'description_' + index})
   })
 };
 

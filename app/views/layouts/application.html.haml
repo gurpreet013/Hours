@@ -4,6 +4,7 @@
     %meta{:charset => "utf-8"}/
     %meta{:content => "noindex, nofollow", :name => "robots"}/
     %title= [(content_for(:page_title) || title), t("titles.application")].compact.uniq.join(" | ")
+    %link{rel:"stylesheet", href:"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css"}
     = stylesheet_link_tag :application, :media => 'all'
     = csrf_meta_tags
     %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}/
