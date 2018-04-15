@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.4.2"
 
-gem "airbrake"
+# gem "airbrake"
 gem "bourbon"
 gem "coffee-rails"
 gem "delayed_job_active_record", "4.0.3"
@@ -14,6 +14,7 @@ gem "neat"
 gem "bitters"
 gem "pg"
 gem "rack-timeout"
+gem 'tickspot-rb', require: 'tickspot'
 gem "rails", "~> 4.2.10"
 gem "recipient_interceptor"
 gem "sass-rails", "~> 5.0.1"
@@ -42,6 +43,7 @@ gem "redcarpet"
 gem "holidays"
 gem "sprockets-rails", "~> 2.3"
 gem "brakeman"
+gem 'active_model_serializers'
 
 source "https://rails-assets.org" do
   gem "rails-assets-chartjs"
@@ -60,6 +62,7 @@ group :development do
   gem "pry"
   gem "spring"
   gem "spring-commands-rspec"
+  gem 'byebug'
 end
 
 group :development, :test do
@@ -73,7 +76,7 @@ group :development, :test do
 end
 
 group :test do
-  gem "capybara-webkit", ">= 1.0.0"
+  # gem "capybara-webkit", ">= 1.0.0"
   gem "database_cleaner"
   gem "launchy"
   gem "shoulda-matchers", "~> 2.7.0"

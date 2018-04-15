@@ -24,30 +24,39 @@ label {
     display: none;
   }
 }
+.form-control-form {
+  textarea,
+  #{$all-text-inputs},
+  select[multiple=multiple] {
+    @include box-sizing(border-box);
+    @include transition(border-color);
+    background-color: white;
+    border-radius: $form-border-radius;
+    border: 1px solid $form-border-color;
+    box-shadow: $form-box-shadow;
+    font-family: $form-font-family;
+    font-size: $form-font-size;
+    margin-bottom: $base-line-height / 2;
+    padding: ($base-line-height / 3) ($base-line-height / 3);
+    width: 100%;
 
-textarea,
-#{$all-text-inputs},
-select[multiple=multiple] {
-  @include box-sizing(border-box);
-  @include transition(border-color);
-  background-color: white;
-  border-radius: $form-border-radius;
-  border: 1px solid $form-border-color;
-  box-shadow: $form-box-shadow;
-  font-family: $form-font-family;
-  font-size: $form-font-size;
-  margin-bottom: $base-line-height / 2;
-  padding: ($base-line-height / 3) ($base-line-height / 3);
-  width: 100%;
+    &:hover {
+      border-color: $form-border-color-hover;
+    }
 
-  &:hover {
-    border-color: $form-border-color-hover;
+    &:focus {
+      border-color: $form-border-color-focus;
+      box-shadow: $form-box-shadow-focus;
+      outline: none;
+    }
   }
+}
 
-  &:focus {
-    border-color: $form-border-color-focus;
-    box-shadow: $form-box-shadow-focus;
-    outline: none;
+.last-td {
+  padding-right: 20px !important;
+  .pull-right {
+    margin-right: -15px;
+    margin-top: 3px;
   }
 }
 

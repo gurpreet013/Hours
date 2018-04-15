@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
   include CSVDownload
+  before_action :authenticate_admin!, if: :current_user
 
   def index
     @filters = EntryFilter.new(params[:entry_filter])

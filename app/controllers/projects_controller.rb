@@ -1,11 +1,26 @@
 include TimeSeriesInitializer
 
 class ProjectsController < ApplicationController
+  before_action :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy], if: :current_user
+
   def index
-    @projects = Project.unarchived.by_last_updated.page(params[:page]).per(7)
+    @projects = current_user.projects.unarchived.by_last_updated.page(params[:page]).per(7)
     @hours_entry = Hour.new
     @mileages_entry = Mileage.new
-    @activities = Hour.by_last_created_at.limit(30)
+  end
+
+  def new_index
+    default_range = Date.current.all_week
+    @from = parse_date(params[:from]) || default_range.first
+    @to = parse_date(params[:to]) || default_range.last
+    @daily_update_scope = @from && @to ? current_user.daily_updates.between(@from, @to) : current_user.daily_updates.current_week
+    @daily_updates = @daily_update_scope.includes(:hours)
+
+    @projects = current_user.projects.unarchived.includes(:categories)
+    respond_to do |format|
+      format.html
+      format.js { render json: projects_json_data }
+    end
   end
 
   def show
@@ -49,6 +64,31 @@ class ProjectsController < ApplicationController
 
   def project_params
     params.require(:project).
-      permit(:name, :billable, :client_id, :archived, :description, :budget)
+      permit(:name, :billable, :client_id, :archived, :description, :budget, user_ids: [])
   end
+
+  def parse_date(date)
+    Date.parse(date) rescue nil
+  end
+
+  def projects_json_data
+    project_hash = categories_grouped_by_project
+    {
+      projects: ActiveModel::Serializer::CollectionSerializer.new(@projects, serializer: ProjectsSerializer, project_hash: project_hash),
+      hours: @daily_updates.map(&:hours).flatten,
+      daily_updates: ActiveModel::Serializer::CollectionSerializer.new(@daily_updates, serializer: DailyUpdateSerializer),
+      range: { from: @from, to: @to }
+    }
+  end
+
+  def categories_grouped_by_project
+    project_hash = Hash.new { |hash, key| hash[key] = [] }
+    all_user_used_tasks = current_user.daily_updates.joins(hours: [:category, :project]).merge(Project.unarchived)
+                                      .select(:project_id, :category_id, :'categories.name').uniq
+    all_user_used_tasks.each do |task|
+      project_hash[task.project_id] << { name: task.name, id: task.category_id }
+    end
+    project_hash
+  end
+
 end

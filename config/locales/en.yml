@@ -178,6 +178,7 @@ en:
     errors:
       client_missing: If the project is billable it needs a client
     form:
+      users: Team Members
       client: Client
       no_client: No Client
     show:

@@ -46,7 +46,7 @@ Hours::Application.configure do
   config.force_ssl = true
 
   # Set to :debug to see everything in the log.
-  config.log_level = :info
+  # config.log_level = :info
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
@@ -71,11 +71,12 @@ Hours::Application.configure do
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = SMTP_SETTINGS
-  config.action_mailer.default_url_options = { host: SMTP_SETTINGS[:domain] }
-
+  config.action_mailer.default_url_options = { host: 'vinsol-resource-management.herokuapp.com' }
+  Rails.application.routes.default_url_options[:host] = "vinsol-resource-management.herokuapp.com"
+  config.log_level = :debug
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).

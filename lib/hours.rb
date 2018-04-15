@@ -2,7 +2,7 @@ module Hours
   def self.google_analytics_id
     ENV["GOOGLE_ANALYTICS_KEY"]
   end
-  
+
   def self.helpful_url
     ENV["HELPFUL_URL"]
   end
@@ -12,6 +12,7 @@ module Hours
   end
 
   def self.helpful_enabled?
+    return false
     if Hours.helpful_url.try(:empty) || Hours.helpful_account.try(:empty?)
       fail <<-MSG
       Helpful account not configured,

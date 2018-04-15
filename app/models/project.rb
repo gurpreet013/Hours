@@ -24,8 +24,11 @@ class Project < ActiveRecord::Base
   validates_with ClientBillableValidator
   has_many :hours
   has_many :mileages
-  has_many :users, -> { uniq }, through: :hours
-  has_many :categories, -> { uniq }, through: :hours
+  has_many :project_users
+  has_many :users, through: :project_users
+  has_many :category_projects, dependent: :destroy
+  has_many :categories, through: :category_projects
+  has_many :used_tasks, -> { uniq }, through: :hours, source: :category
   has_many :tags, -> { uniq }, through: :hours
   belongs_to :client, touch: true
 

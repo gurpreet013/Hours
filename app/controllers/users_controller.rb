@@ -1,6 +1,9 @@
 include TimeSeriesInitializer
 
 class UsersController < ApplicationController
+  before_action :authenticate_admin!, if: :current_user
+  skip_before_action :authenticate_admin!, only: [:show, :edit, :update], if: ->{ current_user.slug.to_s.eql?(params[:id]) }
+
   def show
     @time_series = time_series_for(resource)
   end

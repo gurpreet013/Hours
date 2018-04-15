@@ -4,11 +4,15 @@
     %meta{:charset => "utf-8"}/
     %meta{:content => "noindex, nofollow", :name => "robots"}/
     %title= [(content_for(:page_title) || title), t("titles.application")].compact.uniq.join(" | ")
+    %link{rel:"stylesheet", href:"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css"}
     = stylesheet_link_tag :application, :media => 'all'
     = csrf_meta_tags
     %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}/
     %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
     %meta{:content => "black", :name => "apple-mobile-web-app-status-bar-style"}/
+    %link{rel:"stylesheet", href:"https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"}
+    %link{href: "https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css", rel: "stylesheet", integrity: "sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4", crossorigin: "anonymous"}
+    %link{href: "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel: "stylesheet", integrity: "sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin: "anonymous"}
     %link{:href => image_url("favicon.ico", :rel => "icon")}/
     %link{:href => image_url("apple-touch-icon.png", :rel => "apple-touch-icon")}/
     %link{:href => image_url("apple-touch-icon-76x76.png", :rel => "apple-touch-icon", :sizes => "76x76")}/

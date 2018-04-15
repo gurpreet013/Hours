@@ -48,9 +48,11 @@ class User < ActiveRecord::Base
 
   has_one :account, foreign_key: "owner_id", inverse_of: :owner
   belongs_to :organization, class_name: "Account", inverse_of: :users
-  has_many :hours
-  has_many :mileages
-  has_many :projects, -> { uniq }, through: :hours
+  has_many :daily_updates
+  has_many :hours, through: :daily_updates
+  has_many :mileages, through: :daily_updates
+  has_many :project_users
+  has_many :projects, through: :project_users
 
   scope :by_name, -> { order("lower(last_name)") }
 

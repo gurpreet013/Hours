@@ -1,0 +1,24 @@
+<tr>
+  <td colspan="8"><%= project.name.humanize %></td>
+</tr>
+<tr>
+  <td><%= project.name.humanize %></td>
+  <td><%= project.name.humanize %></td>
+  <td><%= project.name.humanize %></td>
+  <td><%= project.name.humanize %></td>
+  <td><%= project.name.humanize %></td>
+  <td><%= project.name.humanize %></td>
+  <td><%= project.name.humanize %></td>
+  <td><%= project.name.humanize %></td>
+</tr>
+
+
+{{#projects}}
+  <tr colspan='8'>{{name}}</tr>
+  {{#categories}}
+    <tr>{{name}}</tr>
+    {{#dates}}
+      {{hours[.]}}
+    {{/dates}}
+  {{/categories}}
+{{/projects}}

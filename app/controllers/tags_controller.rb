@@ -1,4 +1,5 @@
 class TagsController < ApplicationController
+  before_action :authenticate_admin!, if: :current_user
   def show
     @time_series = time_series_for(resource)
   end

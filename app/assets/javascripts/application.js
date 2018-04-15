@@ -11,6 +11,10 @@
 //= require billables
 //= require date-formatter
 //= require feed
+//= require mustache.min.js
+//= require jquery-ui.min.js
+//= require bootstrap.bundle.min.js
+//= require sweetalert.min.js
 //= require_tree .
 
 
@@ -43,6 +47,7 @@ $(document).ready(function() {
     on('click', 'div', function(e) { e.stopPropagation();
   });
 
+  $('.select2').select2();
   $('#hour_project_id').select2();
   $('#hour_category_id').select2();
   $('#mileage_project_id').select2();
@@ -86,3 +91,5 @@ var enableBillableCheckbox = function () {
   var disable = $("#project_client_id").val() === "";
   $("#project_billable").prop("disabled", disable);
 }
+
+$('form').addClass('form-control-form');

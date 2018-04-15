@@ -34,6 +34,24 @@
 @import "tabs";
 ///////////////////////////////////////////////////////////////////////////////
 
+.sweetalert-btn {
+  font-size: 1rem !important;
+}
+
+.daily-update-header {
+  background-color: lightsalmon;
+  color: antiquewhite;
+}
+
+.project-row {
+  background-color: floralwhite;
+}
+
+.category-td {
+  display: inline;
+  width: 80% !important;
+}
+
 html {
   height: 100%;
   min-height: 100%;

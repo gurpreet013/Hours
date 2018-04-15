@@ -22,6 +22,10 @@ class ApplicationController < ActionController::Base
     users_path
   end
 
+  def authenticate_admin!
+    redirect_to(root_url, flash: { alert: 'Unauthorized' }) unless current_user.admin?
+  end
+
   private
 
   helper_method :current_subdomain, :current_user_owner?

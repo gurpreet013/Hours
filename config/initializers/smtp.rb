@@ -5,6 +5,7 @@ if Rails.env.staging? || Rails.env.production?
     domain: ENV.fetch('SMTP_DOMAIN'), # example: 'this-app.com'
     password: ENV.fetch('SMTP_PASSWORD'),
     port: '587',
-    user_name: ENV.fetch('SMTP_USERNAME')
+    user_name: ENV.fetch('SMTP_USERNAME'),
+    enable_starttls_auto: true
   }
 end
