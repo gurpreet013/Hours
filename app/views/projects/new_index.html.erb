@@ -14,7 +14,14 @@
   <div class='text-center'>
     <button class="submit btn btn-success">Save</button>
   </div>
+  <div class='activity-feed'>
+    <ul>
+      <%# localized_cache [cache_key_for_all(:hours), current_locale] do %>
+        <%#= render partial: "entry", collection: @activities %>
+      <%# end %>
+    </ul>
 </div>
 
 <%= render 'category_row.mustache' %>
 <%= render 'daily_update_template.mustache' %>
+<%= javascript_include_tag 'daily_updates/manager.js' %>

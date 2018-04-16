@@ -4,9 +4,7 @@ class ProjectsController < ApplicationController
   before_action :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy], if: :current_user
 
   def index
-    @projects = current_user.projects.unarchived.by_last_updated.page(params[:page]).per(7)
-    @hours_entry = Hour.new
-    @mileages_entry = Mileage.new
+    @projects = current_user.projects.includes(:client, hours: :category).unarchived.by_last_updated.page(params[:page]).per(7)
   end
 
   def new_index
@@ -15,7 +13,7 @@ class ProjectsController < ApplicationController
     @to = parse_date(params[:to]) || default_range.last
     @daily_update_scope = @from && @to ? current_user.daily_updates.between(@from, @to) : current_user.daily_updates.current_week
     @daily_updates = @daily_update_scope.includes(:hours)
-
+    @activities = Hour.by_last_created_at.limit(30)
     @projects = current_user.projects.unarchived.includes(:categories)
     respond_to do |format|
       format.html

@@ -17,8 +17,13 @@ DailyUpdatesViewModifier.prototype.bindEvent = function() {
 DailyUpdatesViewModifier.prototype.categoryInputBlurHandler = function(e) {
   var currentTarget = $(e.currentTarget),
       currentValue = currentTarget.val(),
-      newTdElement = $('<td>', { text: currentValue, class: 'category-td' })
-  currentTarget.replaceWith(newTdElement);
+      parentTd = currentTarget.parents('td'),
+      projectId = parentTd.data('projectId'),
+      newTdElement = $('<td>', { text: currentValue }),
+      categoryNames = this.projectsHash[projectId].categories.map(function(category) { return category.name } );
+  if(categoryNames.includes(currentValue)) {
+    parentTd.replaceWith(newTdElement);
+  }
 };
 
 DailyUpdatesViewModifier.prototype.addCategoryButtonHandler = function(e) {
@@ -49,6 +54,7 @@ DailyUpdatesViewModifier.prototype.bindAutoCompleteEvent = function(projectId) {
 DailyUpdatesViewModifier.prototype.templateData = function(projectId) {
   return {
     name: null,
+    project_id: projectId,
     hours: this.hourDefaultData(projectId)
   }
 };

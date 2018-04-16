@@ -10,12 +10,18 @@
 //= require i18n
 //= require billables
 //= require date-formatter
+//= require entries
+//= require general_helper
+//= require input_field_change_detector
+//= require mustache_template_handler
 //= require feed
+//= require tag_expander
+//= require tagger
+//= require user_navbar
 //= require mustache.min.js
 //= require jquery-ui.min.js
 //= require bootstrap.bundle.min.js
 //= require sweetalert.min.js
-//= require_tree .
 
 
 var Hours = Hours || {

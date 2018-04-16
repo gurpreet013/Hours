@@ -1,6 +1,9 @@
+//= require daily_updates/view_builder.js
+//= require daily_updates/view_modifier.js
+//= require daily_updates/bulk_update_form_manager.js
+
 function DailyUpdatesManager() {
   this.payload = {};
-
 }
 
 DailyUpdatesManager.prototype.init = function() {
