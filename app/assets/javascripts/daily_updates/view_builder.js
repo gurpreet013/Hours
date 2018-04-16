@@ -10,7 +10,13 @@ DailyUpdatesViewBuilder.prototype.generate = function() {
 };
 
 DailyUpdatesViewBuilder.prototype.prettyDateRange = function() {
-  return this.dateRange.map(function(d) { return moment(d).format('ll'); })
+  return this.dateRange.map(function(d) {
+    var date = moment(d);
+    return {
+      value: date.format('ll'),
+      dayName: date.format('ddd')
+    }
+  })
 }
 
 DailyUpdatesViewBuilder.prototype.templateData = function() {

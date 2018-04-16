@@ -27,7 +27,7 @@ class TimeSeries
   end
 
   def entries_for_time_span
-    @resource.hours.where(created_at: range_for_entries)
+    @resource.hours.joins(:daily_update).where(created_at: range_for_entries)
   end
 
   private
