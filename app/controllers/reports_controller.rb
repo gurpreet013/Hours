@@ -14,8 +14,7 @@ class ReportsController < ApplicationController
       format.csv do
         send_csv(
           name: current_subdomain,
-          hours_entries: entries(Hour.query(params[:entry_filter])),
-          mileages_entries: entries(Mileage.query(params[:entry_filter]))
+          hours_entries: entries(Hour.query(params[:entry_filter]))
         )
       end
     end
