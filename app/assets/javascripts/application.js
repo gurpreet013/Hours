@@ -44,6 +44,7 @@ $('.alert').ready(function() {
 });
 
 $(document).ready(function() {
+  $('form').addClass('form-control-form');
   $('.submit-button').prop('disabled', true);
   $('#content').keyup(function() {
     $('.submit-button').prop('disabled', $(this).val() === '');
@@ -97,5 +98,3 @@ var enableBillableCheckbox = function () {
   var disable = $("#project_client_id").val() === "";
   $("#project_billable").prop("disabled", disable);
 }
-
-$('form').addClass('form-control-form');

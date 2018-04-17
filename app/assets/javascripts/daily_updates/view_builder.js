@@ -68,7 +68,7 @@ DailyUpdatesViewBuilder.prototype.buildDailyUpdatesData = function() {
 };
 
 DailyUpdatesViewBuilder.prototype.changeWeekHeaderHtml = function() {
-  $('#current_week').html(moment(this.data['range']['from']).format('YYYY-MM-DD') + '..' + moment(this.data['range']['to']).format('YYYY-MM-DD'))
+  $('#current_week').html(moment(this.data['range']['from']).format('DD-MM-YYYY') + ' - ' + moment(this.data['range']['to']).format('DD-MM-YYYY'))
 }
 
 DailyUpdatesViewBuilder.prototype.showMustacheTemplate = function(templateId, data, target) {
