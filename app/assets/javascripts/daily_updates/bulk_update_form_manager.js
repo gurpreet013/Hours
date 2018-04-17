@@ -1,6 +1,7 @@
 function BulkUpdateFormManager(dateRange) {
   this.bulkUpdatesData = [];
   this.dateRange = dateRange;
+  this.submitBtnClass = '.submit';
 }
 
 BulkUpdateFormManager.prototype.init = function() {
@@ -9,17 +10,19 @@ BulkUpdateFormManager.prototype.init = function() {
 
 BulkUpdateFormManager.prototype.bindEvent = function() {
   var _this = this;
-  $('body').on('click', '.submit', _this.submitHandler.bind(_this));
+  $('body').on('click', _this.submitBtnClass, _this.submitHandler.bind(_this));
 }
 
 BulkUpdateFormManager.prototype.updateDateRange = function(dateRange) {
   this.dateRange = dateRange;
 }
 
-BulkUpdateFormManager.prototype.submitHandler = function() {
+BulkUpdateFormManager.prototype.submitHandler = function(e) {
+  var currentTarget = $(e.currentTarget);
   this.bulkUpdatesData = [];
   this.prepareCollectionData();
-  this.submitForm();
+  currentTarget.html('Saving')
+  this.submitForm(currentTarget);
 }
 
 BulkUpdateFormManager.prototype.prepareHoursData = function() {
@@ -76,6 +79,7 @@ BulkUpdateFormManager.prototype.submitForm = function() {
 }
 
 BulkUpdateFormManager.prototype.successHandler = function(data) {
+  $(this.submitBtnClass).html('Save');
   $('.hours-td').each(function(index, hourInput) {
     hourInput = $(hourInput);
     if(hourInput.val() == 0) {
