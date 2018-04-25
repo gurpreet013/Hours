@@ -25,9 +25,9 @@ DataFetcher.prototype.successHandler = function(data) {
 }
 
 DataFetcher.prototype.fetchData = function(currentTarget) {
-  if(!this.inputFieldChangeDetector || !this.inputFieldChangeDetector.isInputFieldChanged || this.force) {
+  if(!this.inputFieldChangeDetector || !this.inputFieldChangeDetector.isInputFieldChanged || this.inputFieldChangeDetector.force) {
     this.sendRequest();
-    this.force = false;
+    this.inputFieldChangeDetector.force = false;
   } else {
     this.showSweetAlertMessage(currentTarget);
   }
@@ -46,7 +46,7 @@ DataFetcher.prototype.showSweetAlertMessage = function(currentTarget) {
     closeOnConfirm: true
   },
   function() {
-    _this.force = true;
+    _this.inputFieldChangeDetector.force = true;
     currentTarget.trigger('click');
   });
 };
