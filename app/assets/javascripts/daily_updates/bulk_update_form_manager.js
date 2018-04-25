@@ -1,4 +1,5 @@
-function BulkUpdateFormManager(dateRange) {
+function BulkUpdateFormManager(dateRange, successCallback) {
+  this.successCallback = successCallback;
   this.bulkUpdatesData = [];
   this.dateRange = dateRange;
   this.submitBtnClass = '.submit';
@@ -86,4 +87,5 @@ BulkUpdateFormManager.prototype.successHandler = function(data) {
       hourInput.data('hourId', null)
     }
   })
+  this.successCallback();
 }

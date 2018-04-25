@@ -1,75 +1,43 @@
 //= require daily_updates/view_builder.js
 //= require daily_updates/view_modifier.js
 //= require daily_updates/bulk_update_form_manager.js
+//= require daily_updates/data_fetcher.js
+//= require daily_updates/week_change_manager.js
 
 function DailyUpdatesManager() {
-  this.payload = {};
 }
 
 DailyUpdatesManager.prototype.init = function() {
+  this.inputFieldChangeDetector = new InputFieldChangeDetector();
+  this.inputFieldChangeDetector.init()
+  this.initializeWeekChangeModifier();
   this.bindEvents();
   this.fetchWeekUpdates();
 }
 
+DailyUpdatesManager.prototype.initializeWeekChangeModifier = function() {
+  this.WeekChangeManager = new WeekChangeManager(this.successHandler.bind(this), this.inputFieldChangeDetector);
+  this.WeekChangeManager.init();
+}
+
 DailyUpdatesManager.prototype.bindEvents = function() {
   var _this = this;
-
-  $('#next_week').on('click', _this.weekChangeHandler.bind(_this));
-  $('#previous_week').on('click', _this.weekChangeHandler.bind(_this));
+  $('#user_id').on('change', _this.impersonateUserHandler.bind(_this));
 };
 
-DailyUpdatesManager.prototype.weekChangeHandler = function(e) {
-  var currentTarget = $(e.currentTarget), _this = this;
-  if(!this.inputFieldChangeDetector || !this.inputFieldChangeDetector.isInputFieldChanged || this.force) {
-    this.payload = currentTarget.data();
-    this.fetchWeekUpdates();
-    this.changeWeekHeader(currentTarget);
-    _this.force = false;
-  } else {
-      swal({
-        title: "Are you sure?",
-        text: "Your Changes are not saved yet.",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger sweetalert-btn",
-        cancelButtonClass: 'sweetalert-btn',
-        confirmButtonText: "Discard",
-        closeOnConfirm: true
-      },
-      function() {
-        _this.force = true;
-        currentTarget.trigger('click');
-      });
+DailyUpdatesManager.prototype.impersonateUserHandler = function(e) {
+  var currentTarget = $(e.currentTarget),
+      currentValue = currentTarget.val(),
+      url = currentTarget.data('href') + "?slug=" + currentValue;
+
+  if(currentValue) {
+    window.location.href = url;
   }
 }
 
-DailyUpdatesManager.prototype.changeWeekHeader = function(currentTarget) {
-  var previousWeekElement = $('#previous_week'),
-      nextWeekElement = $('#next_week'),
-      data = {}
-  if(currentTarget.attr('id') == 'previous_week') {
-    data['previous_week'] = { 'from': moment(this.payload['from']).subtract(7, 'days')._d, 'to': moment(this.payload['to']).subtract(7, 'days')._d }
-    data['next_week'] = { 'from': moment(this.payload['from']).add(7, 'days')._d, 'to': moment(this.payload['to']).add(7, 'days')._d }
-  } else {
-    data['previous_week'] = { 'from': moment(this.payload['from']).subtract(7, 'days')._d, 'to': moment(this.payload['to']).subtract(7, 'days')._d }
-    data['next_week'] = { 'from': moment(this.payload['from']).add(7, 'days')._d, 'to': moment(this.payload['to']).add(7, 'days')._d }
-  }
-  previousWeekElement.data('from', data['previous_week']['from'])
-  previousWeekElement.data('to', data['previous_week']['to'])
-  nextWeekElement.data('from', data['next_week']['from'])
-  nextWeekElement.data('to', data['next_week']['to'])
-}
-
-DailyUpdatesManager.prototype.fetchWeekUpdates = function() {
-  var _this = this,
-      payload = this.payload;
-
-  $.ajax({
-    url: '/projects/new_index',
-    data: payload,
-    dataType: "json",
-    success: _this.successHandler.bind(_this)
-  });
+DailyUpdatesManager.prototype.fetchWeekUpdates = function(payload) {
+  var dataFetcher = new DataFetcher(payload || this.payload, this.successHandler.bind(this), this.inputFieldChangeDetector);
+  dataFetcher.sendRequest()
 };
 
 DailyUpdatesManager.prototype.successHandler = function(data) {
@@ -78,8 +46,6 @@ DailyUpdatesManager.prototype.successHandler = function(data) {
   this.viewBuilder.generate();
   this.initializeOrUpdateViewModifier(data.projects, dateRange);
   this.initializeOrUpdateBulkUpdateFormManager(dateRange);
-  this.inputFieldChangeDetector = new InputFieldChangeDetector();
-  this.inputFieldChangeDetector.init();
 };
 
 DailyUpdatesManager.prototype.initializeOrUpdateViewModifier = function(projects, dateRange) {
@@ -94,12 +60,20 @@ DailyUpdatesManager.prototype.initializeOrUpdateViewModifier = function(projects
 
 DailyUpdatesManager.prototype.initializeOrUpdateBulkUpdateFormManager = function(dateRange) {
   if(this.bulkUpdateFormManager) {
-    this.bulkUpdateFormManager.updateDateRange(dateRange);
+    this.bulkUpdateFormManager.updateDateRange(dateRange, this.bulkUpdateSuccessCallback.bind(this));
   } else {
-    this.bulkUpdateFormManager = new BulkUpdateFormManager(dateRange);
+    this.bulkUpdateFormManager = new BulkUpdateFormManager(dateRange, this.bulkUpdateSuccessCallback.bind(this));
     this.bulkUpdateFormManager.init();
   }
 }
+
+DailyUpdatesManager.prototype.bulkUpdateSuccessCallback = function() {
+  this.refreshInputFieldChangeDetector();
+}
+
+DailyUpdatesManager.prototype.refreshInputFieldChangeDetector = function() {
+  this.inputFieldChangeDetector.refresh();
+};
 
 $(function() {
   var bulkDailyUpdateManager = new DailyUpdatesManager();

@@ -11,10 +11,10 @@ class ProjectsController < ApplicationController
     default_range = Date.current.all_week
     @from = parse_date(params[:from]) || default_range.first
     @to = parse_date(params[:to]) || default_range.last
-    @daily_update_scope = @from && @to ? current_user.daily_updates.between(@from, @to) : current_user.daily_updates.current_week
+    @daily_update_scope = @from && @to ? current_user_or_impersonated_user.daily_updates.between(@from, @to) : current_user_or_impersonated_user.daily_updates.current_week
     @daily_updates = @daily_update_scope.includes(:hours)
     @activities = Hour.by_last_created_at.limit(30)
-    @projects = current_user.projects.unarchived.includes(:categories)
+    @projects = current_user_or_impersonated_user.projects.unarchived.includes(:categories)
     respond_to do |format|
       format.html
       format.js { render json: projects_json_data }
@@ -81,7 +81,7 @@ class ProjectsController < ApplicationController
 
   def categories_grouped_by_project
     project_hash = Hash.new { |hash, key| hash[key] = [] }
-    all_user_used_tasks = current_user.daily_updates.joins(hours: [:category, :project]).merge(Project.unarchived)
+    all_user_used_tasks = current_user_or_impersonated_user.daily_updates.joins(hours: [:category, :project]).merge(Project.unarchived)
                                       .select(:project_id, :category_id, :'categories.name').uniq
     all_user_used_tasks.each do |task|
       project_hash[task.project_id] << { name: task.name, id: task.category_id }

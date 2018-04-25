@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  helper_method :current_subdomain, :current_user_owner?
+  helper_method :current_subdomain, :current_user_owner?, :current_user_or_impersonated_user
 
   def current_subdomain
     @current_subdomain ||=
@@ -37,6 +37,11 @@ class ApplicationController < ActionController::Base
 
   def current_user_owner?
     current_account.owner == current_user unless Hours.single_tenant_mode?
+  end
+
+  def current_user_or_impersonated_user
+    impersonated_user = User.find_by_slug(params[:slug]) if current_user.admin?
+    impersonated_user || current_user
   end
 
   def current_account
