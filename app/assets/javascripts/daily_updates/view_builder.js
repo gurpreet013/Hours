@@ -62,7 +62,7 @@ DailyUpdatesViewBuilder.prototype.buildDailyUpdatesData = function() {
   var _this = this;
   return this.dateRange.map(function(date, index) {
     var obj = _this.data.daily_updates.find(function(daily_update) { return daily_update.date == moment(date).format('YYYY-MM-DD') });
-    obj = obj || { description: 'NA', date: date };
+    obj = obj || { description: 'NA', date: moment(date).format('YYYY-MM-DD') };
     return $.extend(obj, {descriptionName: 'description_' + index})
   })
 };
