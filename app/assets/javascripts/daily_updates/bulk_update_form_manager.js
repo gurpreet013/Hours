@@ -69,11 +69,13 @@ BulkUpdateFormManager.prototype.prepareDescriptionHash = function() {
 }
 
 BulkUpdateFormManager.prototype.submitForm = function() {
-  var _this = this;
+  var _this = this,
+      impersonatedSelectBox = $('#user_id'),
+      payload = $.extend({daily_updates: _this.bulkUpdatesData}, {slug: impersonatedSelectBox.val()});
   $.ajax({
     url: '/daily_updates/bulk_update',
     method: 'POST',
-    data: {daily_updates: _this.bulkUpdatesData},
+    data: payload,
     dataType: "json",
     success: _this.successHandler.bind(_this)
   })
