@@ -25,7 +25,6 @@ DataFetcher.prototype.successHandler = function(data) {
 }
 
 DataFetcher.prototype.fetchData = function(currentTarget) {
-  debugger
   if(!this.inputFieldChangeDetector || !this.inputFieldChangeDetector.isInputFieldChanged || this.force) {
     this.sendRequest();
     this.force = false;
