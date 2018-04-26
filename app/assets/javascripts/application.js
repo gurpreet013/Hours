@@ -22,6 +22,7 @@
 //= require jquery-ui.min.js
 //= require bootstrap.bundle.min.js
 //= require sweetalert.min.js
+//= require charts
 
 
 var Hours = Hours || {
