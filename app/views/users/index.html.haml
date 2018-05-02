@@ -1,19 +1,31 @@
-.outer
-  .container
-    %h1= title
-    .users-overview
-      %table
-        %tbody
-          - @users.each do |user|
-            %tr
-              %td
-                = link_to user.full_name, user_path(user) if user.confirmed?
-              %td= user.email
-              %td
-                - unless user.accepted_or_not_invited?
-                  = t("users.invitation_sent_at",                            |
-                    time_ago: time_ago_in_words(user.invitation_created_at)) |
-    .invitation-form
-      = simple_form_for(User.new, url: user_invitation_path) do |f|
-        = f.input :email, placeholder: t("users.email"), label: false, required: true
-        = f.button :submit, t("users.invite")
+
+.container
+  %h1= title
+  .row
+    .col-md-8
+      .users-overview
+        .card.bg-light
+          .card-body
+            %table
+              %thead
+                %th
+                  User Name
+                %th
+                  User Email
+                %th
+
+              %tbody
+                - @users.each do |user|
+                  %tr
+                    %td
+                      = link_to user.full_name, user_path(user) if user.confirmed?
+                    %td= user.email
+                    %td
+                      - unless user.accepted_or_not_invited?
+                        = t("users.invitation_sent_at",                            |
+                          time_ago: time_ago_in_words(user.invitation_created_at)) |
+    .col-md-4
+      .invitation-form
+        = simple_form_for(User.new, url: user_invitation_path) do |f|
+          = f.input :email, placeholder: t("users.email"), label: false, required: true
+          = f.button :submit, t("users.invite")

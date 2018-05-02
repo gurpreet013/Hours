@@ -1,7 +1,7 @@
 <script id="daily_update_template" type="x-tmpl-mustache">
   <div id='{{userSlug}}'>
-    <div data-readonly='{{readonly}}'>
-      <h4>{{userFullName}} Weekly Timesheet</h2>
+    <div class="col-md-auto" data-readonly='{{readonly}}'>
+      <h1>{{userFullName}} <span class="text-secondary">Weekly Timesheet</span></h1>
       {{#currentWeek}}
         <h5 data-from='{{from}}' data-to='{{to}}' data-slug='{{userSlug}}' class='current_week'></h3>
       {{/currentWeek}}
@@ -15,7 +15,7 @@
       </p>
       {{^readonly}}
         <% if current_user.admin? %>
-          <div>
+          <div class='col-md-3'>
             <%= select_tag :user_id, options_from_collection_for_select(User.all, :slug, :name, params[:slug]), include_blank: 'Switch Person', data: { href: daily_updates_path }  %>
           </div>
         <% end %>
@@ -36,10 +36,17 @@
         <tbody>
         {{#projects}}
           <tr class='project-row'>
-            <th colspan='8'>{{name}}
-              {{^readonly}}
-                <span class='add_category pull-right btn btn-info btn-sm' data-project-id={{id}}>Add Task</span>
-              {{/readonly}}
+            <th colspan='8'>
+              <div class="row justify-content-between align-items-center ml-0 mr-0">
+                <div class="col-auto pl-0">
+                {{name}}
+                </div>
+                {{^readonly}}
+                  <div class="col-auto pr-0">
+                    <span class='add_category btn btn-secondary btn-sm' data-project-id={{id}}>Add Task</span>
+                  </div>
+                {{/readonly}}
+              </div>
             </th>
           </tr>
           {{#currentWeekCategories}}

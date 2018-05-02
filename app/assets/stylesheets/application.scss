@@ -25,7 +25,7 @@
 @import "header";
 @import "billables";
 @import "reports";
-@import url(//fonts.googleapis.com/css?family=Open+Sans);
+@import url('//fonts.googleapis.com/css?family=Open+Sans:400,700');
 @import "pikaday";
 @import "select2";
 @import "tagger";
@@ -39,12 +39,12 @@
 }
 
 .daily-update-header {
-  background-color: lightsalmon;
-  color: antiquewhite;
+  background-color: #eee;
+  color: #000;
 }
 
 .project-row {
-  background-color: floralwhite;
+  background-color: #f2f7fd;
 }
 
 .category-td {
@@ -58,12 +58,14 @@ html {
 }
 
 body {
-  height: 100%;
+  height: auto;
   margin: 0;
   padding-top: 60px;
   font-family: 'Open Sans', sans-serif;
   line-height: 1.7em;
-  background: #f7f6f0;
+  background: linear-gradient(#ecece7, #ffffff);
+  background: -webkit-linear-gradient(#ecece7, #ffffff);
+  background-attachment: fixed;
 
   &.accounts-new, &.accounts-create {
     background: image-url("sky.jpg") center center;

@@ -45,6 +45,7 @@ $('.alert').ready(function() {
 });
 
 $(document).ready(function() {
+  $( "table" ).wrap( "<div class='table-responsive'></div>" );
   $('form').addClass('form-control-form');
   $('.submit-button').prop('disabled', true);
   $('#content').keyup(function() {
@@ -99,3 +100,5 @@ var enableBillableCheckbox = function () {
   var disable = $("#project_client_id").val() === "";
   $("#project_billable").prop("disabled", disable);
 }
+
+
