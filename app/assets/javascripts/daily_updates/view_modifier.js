@@ -1,9 +1,11 @@
 function DailyUpdatesViewModifier(projectsHash, dateRange) {
   this.projectsHash = projectsHash;
   this.dateRange = dateRange;
+  this.projectRemainingCategoriesHash = {}
 };
 
 DailyUpdatesViewModifier.prototype.init = function() {
+  this.prepareCategoriesLeftData();
   this.bindEvent();
 };
 
@@ -36,16 +38,26 @@ DailyUpdatesViewModifier.prototype.addCategoryButtonHandler = function(e) {
 
 DailyUpdatesViewModifier.prototype.removeCategoryRowHandler = function(e) {
   var currentTarget = $(e.currentTarget),
-      parentTr =  currentTarget.parents('tr');
+      parentTr =  currentTarget.parents('tr'),
+      projectId = parentTr.data('projectId'),
+      categoryId = parentTr.data('categoryId'),
+      removeCategoryObj = this.projectsHash[projectId].categories.find(function(category) {return category.id == categoryId})
+
+  this.projectRemainingCategoriesHash[projectId].push(removeCategoryObj);
+  this.toggleAddCategoryIfRequired(projectId);
   parentTr.remove()
 };
 
 DailyUpdatesViewModifier.prototype.bindAutoCompleteEvent = function(projectId) {
-  var categories = this.projectsHash[projectId].categories.map(function(category) { return {value: category.name, id: category.id }});
+  var categories = this.projectRemainingCategoriesHash[projectId].map(function(category) { return {value: category.name, id: category.id }}),
+      _this = this;
   $('#category_input').autocomplete({
     source: categories,
     select: function(event, ui) {
       $(this).parents('tr').find('input[type="number"]').data('categoryId', ui.item.id)
+      $(this).parents('tr').data('categoryId', ui.item.id)
+      _this.projectRemainingCategoriesHash[projectId] = _this.projectRemainingCategoriesHash[projectId].filter(function(obj){ return obj.id != ui.item.id })
+      _this.toggleAddCategoryIfRequired(projectId);
     }
   });
   $('#category_input').focus();
@@ -78,6 +90,26 @@ DailyUpdatesViewModifier.prototype.showMustacheTemplate = function(templateId, d
   templateHandler.display();
 };
 
+DailyUpdatesViewModifier.prototype.prepareCategoriesLeftData = function() {
+  var _this = this;
+  Object.values(this.projectsHash).forEach(function(project) {
+    _this.projectRemainingCategoriesHash[project.id] = project.categories.filter(function(obj) {
+      return !project.current_week_categories.some(function(category){
+        return obj.id === category.id;
+      });
+    })
+    _this.toggleAddCategoryIfRequired(project.id)
+  })
+};
+
+DailyUpdatesViewModifier.prototype.toggleAddCategoryIfRequired = function(projectId) {
+  var addCategoryBtn = $('[data-project-id="' + projectId + '"].add_category');
+  if(this.projectRemainingCategoriesHash[projectId].length == 0) {
+    addCategoryBtn.hide();
+  } else {
+    addCategoryBtn.show();
+  }
+};
 
 DailyUpdatesViewModifier.prototype.updateData = function(projectsHash, dateRange) {
   this.projectsHash = projectsHash;
