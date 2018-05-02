@@ -35,7 +35,7 @@ class EntryQuery
     end
 
     def user(param)
-      where(user_id: param)
+      joins(:daily_update).where(daily_updates: { user_id: param })
     end
 
     def billed(param)
