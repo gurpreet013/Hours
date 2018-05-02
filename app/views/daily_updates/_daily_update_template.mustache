@@ -1,79 +1,91 @@
 <script id="daily_update_template" type="x-tmpl-mustache">
   <div id='{{userSlug}}'>
-    <div class="col-md-auto" data-readonly='{{readonly}}'>
-      <h1>{{userFullName}} <span class="text-secondary">Weekly Timesheet</span></h1>
-      {{#currentWeek}}
-        <h5 data-from='{{from}}' data-to='{{to}}' data-slug='{{userSlug}}' class='current_week'></h3>
-      {{/currentWeek}}
-      <p class="week-nav">
-        {{#previousWeek}}
-          <a href='javascript:void(0)' class='previous_week' data-slug='{{userSlug}}' data-from='{{from}}' data-to='{{to}}'> Previous week | </a>
-        {{/previousWeek}}
-        {{#nextWeek}}
-          <a href='javascript:void(0)' class='next_week' data-slug='{{userSlug}}' data-from='{{from}}' data-to='{{to}}'> Next week</a>
-        {{/nextWeek}}
-      </p>
+    <div class="row justify-content-between align-items-end">
+      <div class="col-md-auto" data-readonly='{{readonly}}'>
+        <h1>{{userFullName}} <span class="text-secondary">Weekly Timesheet</span></h1>
+        {{#currentWeek}}
+          <h5 data-from='{{from}}' data-to='{{to}}' data-slug='{{userSlug}}' class='current_week'></h3>
+        {{/currentWeek}}
+        <p class="week-nav">
+          {{#previousWeek}}
+            <a href='javascript:void(0)' class='previous_week' data-slug='{{userSlug}}' data-from='{{from}}' data-to='{{to}}'> Previous week | </a>
+          {{/previousWeek}}
+          {{#nextWeek}}
+            <a href='javascript:void(0)' class='next_week' data-slug='{{userSlug}}' data-from='{{from}}' data-to='{{to}}'> Next week</a>
+          {{/nextWeek}}
+        </p>
+      </div>
       {{^readonly}}
         <% if current_user.admin? %>
-          <div class='col-md-3'>
-            <%= select_tag :user_id, options_from_collection_for_select(User.all, :slug, :name, params[:slug]), include_blank: 'Switch Person', data: { href: daily_updates_path }  %>
+          <div class='col-md-4'>
+            <h6 class="text-right mb-1">
+              <small>
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                <%= link_to 'Switch Back to Me', root_url %>
+              </small>
+            </h6>
+            <div class="input-group input-group-sm mb-2">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Switch To</label>
+              </div>
+              <%= select_tag :user_id, options_from_collection_for_select(User.all, :slug, :name, params[:slug]), include_blank: 'Switch Person', data: { href: daily_updates_path }, class: 'custom-select mb-0 input-group-append'  %>
+            </div>
+
           </div>
         <% end %>
       {{/readonly}}
     </div>
-    <div class='table-responsive'>
-      <table class='table table-sm table-bordered table-hover'>
-        <thead>
-          <tr class='daily-update-header'>
-            <th class="align-middle">
-              Projects
-            </th>
-            {{#dates}}
-              <th class="text-center">{{value}}<br><small>{{dayName}}</small></th>
-            {{/dates}}
-          </tr>
-        </thead>
-        <tbody>
-        {{#projects}}
-          <tr class='project-row'>
-            <th colspan='8'>
-              <div class="row justify-content-between align-items-center ml-0 mr-0">
-                <div class="col-auto pl-0">
-                {{name}}
-                </div>
-                {{^readonly}}
-                  <div class="col-auto pr-0">
-                    <span class='add_category btn btn-secondary btn-sm' data-project-id={{id}}>Add Task</span>
-                  </div>
-                {{/readonly}}
+    <table class='table table-sm table-bordered table-hover'>
+      <thead>
+        <tr class='daily-update-header'>
+          <th class="align-middle">
+            Projects
+          </th>
+          {{#dates}}
+            <th class="text-center">{{value}}<br><small>{{dayName}}</small></th>
+          {{/dates}}
+        </tr>
+      </thead>
+      <tbody>
+      {{#projects}}
+        <tr class='project-row'>
+          <th colspan='8'>
+            <div class="row justify-content-between align-items-center ml-0 mr-0">
+              <div class="col-auto pl-0">
+              {{name}}
               </div>
-            </th>
-          </tr>
-          {{#currentWeekCategories}}
-            {{> category_row }}
-          {{/currentWeekCategories}}
-        {{/projects}}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td>
-              <small>
-                <b>
-                  Description
-                </b>
-              </small>
-            </td>
-            {{#dailyUpdates}}
-              {{#readonly}}
-                <td>{{description}}</td>
-              {{/readonly}}
               {{^readonly}}
-                <td><textarea class='td-description form-control form-control-sm' name='{{descriptionName}}' data-date='{{date}}'>{{description}}</textarea></td>
+                <div class="col-auto pr-0">
+                  <span class='add_category btn btn-secondary btn-sm' data-project-id={{id}}>Add Task</span>
+                </div>
               {{/readonly}}
-            {{/dailyUpdates}}
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+            </div>
+          </th>
+        </tr>
+        {{#currentWeekCategories}}
+          {{> category_row }}
+        {{/currentWeekCategories}}
+      {{/projects}}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>
+            <small>
+              <b>
+                Description
+              </b>
+            </small>
+          </td>
+          {{#dailyUpdates}}
+            {{#readonly}}
+              <td>{{description}}</td>
+            {{/readonly}}
+            {{^readonly}}
+              <td><textarea class='td-description form-control form-control-sm' name='{{descriptionName}}' data-date='{{date}}'>{{description}}</textarea></td>
+            {{/readonly}}
+          {{/dailyUpdates}}
+        </tr>
+      </tfoot>
+    </table>
   </div>
 </script>
