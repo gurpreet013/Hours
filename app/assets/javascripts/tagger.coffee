@@ -10,7 +10,7 @@ class window.Tagger
     @highlight()
 
   highlight: ->
-    text = @_pad(@input.val())
+    text = @_pad(@input.val() || '')
     text = @_tag(text);
     @container.find(".background-highlighter").html(text)
 

@@ -35,6 +35,10 @@ class ApplicationController < ActionController::Base
       current_account.subdomain unless Hours.single_tenant_mode?
   end
 
+  def parse_date(date)
+    Date.parse(date) rescue nil
+  end
+
   def current_user_owner?
     current_account.owner == current_user unless Hours.single_tenant_mode?
   end

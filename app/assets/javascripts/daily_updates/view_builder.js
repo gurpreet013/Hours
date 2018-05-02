@@ -1,11 +1,15 @@
-function DailyUpdatesViewBuilder(data, dateRange) {
+function DailyUpdatesViewBuilder(data, dateRange, options) {
+  options = options || {}
   this.data = data;
   this.dateRange = dateRange;
   this.dailyUpdateHash = arrayToHash(data.daily_updates);
+  this.readonly = options.readonly;
+  this.target = options.target || '#daily_entry_template';
+  this.mustacheOptions = options.mustacheOptions;
 }
 
 DailyUpdatesViewBuilder.prototype.generate = function() {
-  this.showMustacheTemplate('#daily_update_template', this.templateData(), '#daily_entry_template');
+  this.showMustacheTemplate('#daily_update_template', this.templateData(), this.target);
   this.changeWeekHeaderHtml();
 };
 
@@ -21,9 +25,40 @@ DailyUpdatesViewBuilder.prototype.prettyDateRange = function() {
 
 DailyUpdatesViewBuilder.prototype.templateData = function() {
   return {
+    readonly: this.readonly,
+    userFullName: this.data.user.full_name,
+    userSlug: this.data.user.slug,
+    currentWeek: this.currentWeekData(),
+    previousWeek: this.previousWeekData(),
+    nextWeek: this.nextWeekData(),
     dates: this.prettyDateRange(),
     projects: this.buildProjectsData(),
     dailyUpdates: this.buildDailyUpdatesData()
+  }
+}
+
+DailyUpdatesViewBuilder.prototype.currentWeekData = function() {
+  return {
+    from: this.data.range.from,
+    to: this.data.range.to
+  }
+}
+
+DailyUpdatesViewBuilder.prototype.nextWeekData = function() {
+  var from = moment(this.data.range.from).add(7, 'd').format('YYYY-MM-DD'),
+      to = moment(this.data.range.to).add(7, 'd').format('YYYY-MM-DD');
+  return {
+    from: from,
+    to: to,
+  }
+}
+
+DailyUpdatesViewBuilder.prototype.previousWeekData = function() {
+  var from = moment(this.data.range.from).subtract(7, 'd').format('YYYY-MM-DD'),
+      to = moment(this.data.range.to).subtract(7, 'd').format('YYYY-MM-DD');
+  return {
+    from: from,
+    to: to,
   }
 }
 
@@ -68,12 +103,13 @@ DailyUpdatesViewBuilder.prototype.buildDailyUpdatesData = function() {
 };
 
 DailyUpdatesViewBuilder.prototype.changeWeekHeaderHtml = function() {
-  $('#current_week').html(moment(this.data['range']['from']).format('DD-MM-YYYY') + ' - ' + moment(this.data['range']['to']).format('DD-MM-YYYY'))
+  $('[data-user-slug="' + this.data.user.slug + '"].current_week').html(moment(this.data['range']['from']).format('DD-MM-YYYY') + ' - ' + moment(this.data['range']['to']).format('DD-MM-YYYY'))
 }
 
 DailyUpdatesViewBuilder.prototype.showMustacheTemplate = function(templateId, data, target) {
   var template = $('#category_row').html();
   Mustache.parse(template);
-  var templateHandler = new MustacheTemplateHandler(templateId, target, data, {templates: { category_row: template }});
+  var mustacheOptions = $.extend(this.mustacheOptions, {templates: { category_row: template }}),
+      templateHandler = new MustacheTemplateHandler(templateId, target, data, mustacheOptions);
   templateHandler.display();
 };

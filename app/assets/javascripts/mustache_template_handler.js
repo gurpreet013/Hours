@@ -13,6 +13,8 @@ MustacheTemplateHandler.prototype.display = function() {
     $(this.target).replaceWith(rendered);
   } else if (this.options.after) {
     $(this.target).after(rendered);
+  } else if (this.options.append) {
+    $(this.target).append(rendered);
   } else {
     $(this.target).html(rendered);
   }

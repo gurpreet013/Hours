@@ -1,0 +1,20 @@
+<div class='container'>
+  <div class="parent-container <%= current_user_or_impersonated_user.slug %>" data-slug='<%= current_user_or_impersonated_user.slug %>'>
+    <div id='daily_entry_template'>
+    </div>
+    <div class='text-center'>
+      <button class="submit btn btn-success">Save</button>
+    </div>
+    <div class='activity-feed'>
+      <ul>
+        <%# localized_cache [cache_key_for_all(:hours), current_locale] do %>
+          <%#= render partial: "entry", collection: @activities %>
+        <%# end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<%= render 'category_row.mustache' %>
+<%= render 'daily_update_template.mustache' %>
+<%= javascript_include_tag 'daily_updates/manager.js' %>

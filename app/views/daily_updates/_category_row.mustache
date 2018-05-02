@@ -15,7 +15,12 @@
         {{#minusRequiredClass}}
           <a href="javascript:void(0);" class='minus-row text-danger pull-right'><i class="fa fa-minus-circle"></i></a>
         {{/minusRequiredClass}}
-        <input type='number' name='{{hoursName}}' class='form-control-plaintext hours-td form-control-sm form-control' data-project-id='{{project_id}}' data-category-id='{{category_id}}' data-hour-id='{{id}}' data-date='{{date}}' value='{{value}}'/>
+        {{#readonly}}
+          <span>{{value}}</span>
+        {{/readonly}}
+        {{^readonly}}
+          <input type='number' name='{{hoursName}}' class='form-control-plaintext hours-td form-control-sm form-control' data-project-id='{{project_id}}' data-category-id='{{category_id}}' data-hour-id='{{id}}' data-date='{{date}}' value='{{value}}'/>
+        {{/readonly}}
       </td>
     {{/hours}}
   </tr>

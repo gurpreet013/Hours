@@ -21,3 +21,20 @@ function arrayToHash(collection) {
   })
   return hash;
 }
+
+if(!window.location.query) {
+  window.location.query = function(){
+    var map = {};
+
+    if ("" != this.search) {
+      var groups = this.search.substr(1).split("&"), i;
+
+      for (i in groups) {
+        i = groups[i].split("=");
+        map[decodeURIComponent(i[0])] = decodeURIComponent(i[1]);
+      }
+    }
+
+    return map;
+  };
+}

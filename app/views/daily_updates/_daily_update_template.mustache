@@ -1,0 +1,72 @@
+<script id="daily_update_template" type="x-tmpl-mustache">
+  <div id='{{userSlug}}'>
+    <div data-readonly='{{readonly}}'>
+      <h4>{{userFullName}} Weekly Timesheet</h2>
+      {{#currentWeek}}
+        <h5 data-from='{{from}}' data-to='{{to}}' data-slug='{{userSlug}}' class='current_week'></h3>
+      {{/currentWeek}}
+      <p class="week-nav">
+        {{#previousWeek}}
+          <a href='javascript:void(0)' class='previous_week' data-slug='{{userSlug}}' data-from='{{from}}' data-to='{{to}}'> Previous week | </a>
+        {{/previousWeek}}
+        {{#nextWeek}}
+          <a href='javascript:void(0)' class='next_week' data-slug='{{userSlug}}' data-from='{{from}}' data-to='{{to}}'> Next week</a>
+        {{/nextWeek}}
+      </p>
+      {{^readonly}}
+        <% if current_user.admin? %>
+          <div>
+            <%= select_tag :user_id, options_from_collection_for_select(User.all, :slug, :name, params[:slug]), include_blank: 'Switch Person', data: { href: daily_updates_path }  %>
+          </div>
+        <% end %>
+      {{/readonly}}
+    </div>
+    <div class='table-responsive'>
+      <table class='table table-sm table-bordered table-hover'>
+        <thead>
+          <tr class='daily-update-header'>
+            <th class="align-middle">
+              Projects
+            </th>
+            {{#dates}}
+              <th class="text-center">{{value}}<br><small>{{dayName}}</small></th>
+            {{/dates}}
+          </tr>
+        </thead>
+        <tbody>
+        {{#projects}}
+          <tr class='project-row'>
+            <th colspan='8'>{{name}}
+              {{^readonly}}
+                <span class='add_category pull-right btn btn-info btn-sm' data-project-id={{id}}>Add Task</span>
+              {{/readonly}}
+            </th>
+          </tr>
+          {{#currentWeekCategories}}
+            {{> category_row }}
+          {{/currentWeekCategories}}
+        {{/projects}}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              <small>
+                <b>
+                  Description
+                </b>
+              </small>
+            </td>
+            {{#dailyUpdates}}
+              {{#readonly}}
+                <td>{{description}}</td>
+              {{/readonly}}
+              {{^readonly}}
+                <td><textarea class='td-description form-control form-control-sm' name='{{descriptionName}}' data-date='{{date}}'>{{description}}</textarea></td>
+              {{/readonly}}
+            {{/dailyUpdates}}
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</script>

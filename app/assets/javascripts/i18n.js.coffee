@@ -1,5 +1,7 @@
 window.I18n =
   en:
+    routes:
+      daily_updates_path: '/daily_updates/'
     date:
       today: 'today'
       yesterday: 'yesterday'

@@ -1,16 +1,20 @@
-function DataFetcher(payload, successCallback, inputFieldChangeDetector) {
+function DataFetcher(payload, options) {
+  options = options || {};
   this.payload = payload || {};
-  this.successCallback = successCallback;
-  this.inputFieldChangeDetector = inputFieldChangeDetector;
+  this.readonly = options.readonly;
+  this.successCallback = options.successCallback;
+  this.inputFieldChangeDetector = options.inputFieldChangeDetector;
 }
 
 DataFetcher.prototype.sendRequest = function() {
   var _this = this,
-      impersonatedSelectBox = $('#user_id'),
-      payload = $.extend({}, this.payload, {slug: impersonatedSelectBox.val()});
+      payload = this.payload,
+      userSlug = window.location.query().slug;
+
+  if(userSlug) { payload['slug'] = userSlug; }
 
   $.ajax({
-    url: '/projects/new_index',
+    url: window.I18n.en.routes.daily_updates_path,
     data: payload,
     dataType: "json",
     success: _this.successHandler.bind(_this)
@@ -18,6 +22,7 @@ DataFetcher.prototype.sendRequest = function() {
 };
 
 DataFetcher.prototype.successHandler = function(data) {
+  data = data.collection ? data : $.extend(data.users[0], {readonly: this.readonly});
   if(typeof this.successCallback == 'function') {
     this.successCallback(data);
   }
@@ -27,7 +32,9 @@ DataFetcher.prototype.successHandler = function(data) {
 DataFetcher.prototype.fetchData = function(currentTarget) {
   if(!this.inputFieldChangeDetector || !this.inputFieldChangeDetector.isInputFieldChanged || this.inputFieldChangeDetector.force) {
     this.sendRequest();
-    this.inputFieldChangeDetector.force = false;
+    if(!this.readonly) {
+      this.inputFieldChangeDetector.force = false;
+    }
   } else {
     this.showSweetAlertMessage(currentTarget);
   }
@@ -52,5 +59,7 @@ DataFetcher.prototype.showSweetAlertMessage = function(currentTarget) {
 };
 
 DataFetcher.prototype.initializeInputFieldChangeDetector = function() {
-  this.inputFieldChangeDetector.refresh();
+  if(!this.readonly) {
+    this.inputFieldChangeDetector.refresh();
+  }
 }

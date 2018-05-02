@@ -16,13 +16,13 @@ DailyUpdatesManager.prototype.init = function() {
 }
 
 DailyUpdatesManager.prototype.initializeWeekChangeModifier = function() {
-  this.WeekChangeManager = new WeekChangeManager(this.successHandler.bind(this), this.inputFieldChangeDetector);
+  this.WeekChangeManager = new WeekChangeManager(this.successHandler.bind(this), this.inputFieldChangeDetector, false);
   this.WeekChangeManager.init();
 }
 
 DailyUpdatesManager.prototype.bindEvents = function() {
   var _this = this;
-  $('#user_id').on('change', _this.impersonateUserHandler.bind(_this));
+  $('body').on('change', '#user_id', _this.impersonateUserHandler.bind(_this));
 };
 
 DailyUpdatesManager.prototype.impersonateUserHandler = function(e) {
@@ -36,14 +36,26 @@ DailyUpdatesManager.prototype.impersonateUserHandler = function(e) {
 }
 
 DailyUpdatesManager.prototype.fetchWeekUpdates = function(payload) {
-  var dataFetcher = new DataFetcher(payload || this.payload, this.successHandler.bind(this), this.inputFieldChangeDetector);
+  var dataFetcherOptions = {
+        successCallback: this.initialFetchSuccessHandler.bind(this),
+        inputFieldChangeDetector: this.inputFieldChangeDetector
+      },
+      dataFetcher = new DataFetcher(payload, dataFetcherOptions);
+
   dataFetcher.sendRequest()
 };
 
+DailyUpdatesManager.prototype.initialFetchSuccessHandler = function(data) {
+  var dateRange = getDates(new Date(data.range.from), new Date(data.range.to)),
+      viewBuilder = new DailyUpdatesViewBuilder(data, dateRange);
+
+  viewBuilder.generate();
+  this.successHandler(data);
+}
+
 DailyUpdatesManager.prototype.successHandler = function(data) {
   var dateRange = getDates(new Date(data.range.from), new Date(data.range.to));
-  this.viewBuilder = new DailyUpdatesViewBuilder(data, dateRange);
-  this.viewBuilder.generate();
+
   this.initializeOrUpdateViewModifier(data.projects, dateRange);
   this.initializeOrUpdateBulkUpdateFormManager(dateRange);
 };
