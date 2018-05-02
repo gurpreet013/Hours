@@ -3,13 +3,6 @@
   margin-right: -25px;
 }
 
-.reports-tabs-container {
-  @include media(max-width $medium-screen) {
-    width:100%;
-  }
-  width:73%;
-}
-
 .accordion-tabs {
   @include clearfix;
   line-height: 1.5;
@@ -60,16 +53,19 @@
       border-top: 0;
       border-top-left-radius: $base-border-radius;
       border-top-right-radius: $base-border-radius;
+      background-color: #eee;
+      margin: 0 0.4em;
     }
-    background-color: $tab-inactive-color;
+    background-color: white;
     border-top: $tab-border;
     color: $dark-gray;
     display: block;
+    font-size: 0.875em;
     font-weight: bold;
-    padding: $base-spacing/2 $gutter/2;
+    padding: 0.5em 2em !important;
     text-decoration: none;
     padding-left: 10px;
-
+    text-transform: uppercase;
 
     &:hover {
       color: $base-link-color;
@@ -81,9 +77,9 @@
 
     &.is-active {
       @include media($medium-screen) {
-        background-color: $tab-active-background;
+        background-color: white;
         border: $tab-border;
-        border-bottom-color: $tab-active-background;
+        border-bottom-color: white;
         margin-bottom: -1px;
       }
       background-color: $tab-active-background;
@@ -93,10 +89,10 @@
   .tab-content {
     @include media($medium-screen) {
       border-top: $tab-border;
-      border-bottom: $tab-border;
+      /*border-bottom: $tab-border;*/
       float: left;
     }
-    background: $tab-content-background;
+    /*background: $tab-content-background;*/
     display: none;
     padding: $base-spacing $gutter;
     width: 100%;

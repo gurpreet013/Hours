@@ -14,7 +14,16 @@
     <tbody>
     {{#projects}}
       <tr class='project-row'>
-        <th colspan='8'>{{name}} <span class='add_category pull-right btn btn-info btn-sm' data-project-id={{id}}>Add Task</span></th>
+        <th colspan='8'>
+          <div class="row justify-content-between align-items-center ml-0 mr-0">
+            <div class="col-auto pl-0">
+            {{name}}
+            </div>
+            <div class="col-auto pr-0">
+              <span class='add_category btn btn-secondary btn-sm' data-project-id={{id}}>Add Task</span>
+            </div>
+          </div>
+        </th>
       </tr>
       {{#currentWeekCategories}}
         {{> category_row }}

@@ -1,8 +1,9 @@
-.outer
-  .container
-    %h1= title
-    %p= link_to 'New Project', new_project_path
-    %hr/
-    %ul.categories-overview= render partial: "project", collection: @projects
-    %hr/
+
+.container
+  .row.justify-content-between
+    .col-auto
+      %h1= title
+    .col-auto
+      %div= link_to 'New Project', new_project_path, class: 'btn btn-outline-success btn-sm'
+  %ul.categories-overview= render partial: "project", collection: @projects
 = paginate @projects

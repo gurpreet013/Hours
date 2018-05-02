@@ -30,11 +30,6 @@
     font-size: $base-font-size;
   }
 
-  .select {
-    background-color: $base-background-color;
-    width: 100%;
-  }
-
   .entry-change {
     float: right;
   }
@@ -53,7 +48,7 @@
 }
 
 .edit-entry-wrapper {
-  @extend .new-entry-wrapper;
+  /*@extend .new-entry-wrapper;*/
   @include pad(6% 3%);
   h2 {
     padding: 0;
@@ -150,18 +145,10 @@
 
   td,
   th {
-    padding: 4px;
-
-    &:first-child {
-      padding-left: 0;
-    }
-
-    &:last-child {
-      padding-right: 0;
-    }
+    font-size: 0.875em;
   }
 
-  // date
+/*  // date
   th:nth-child(1) {
     width: 10%;
   }
@@ -189,9 +176,9 @@
   // changes
   th:nth-child(7) {
     width: 10%;
-  }
+  }*/
 
-  @media screen and (max-width: $medium-screen) {
+/*  @media screen and (max-width: $medium-screen) {
     th:nth-child(1) {
       width: 30%;
     }
@@ -203,7 +190,7 @@
     th:nth-child(3) {
       width: 10%;
     }
-  }
+  }*/
 
   .weekday {
     color: $medium-gray;
@@ -222,4 +209,10 @@
   .right {
     text-align: right;
   }
+}
+
+.select {
+  background-color: $base-background-color;
+  width: 100%;
+  margin-bottom: 0.75em;
 }

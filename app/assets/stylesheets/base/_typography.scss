@@ -3,7 +3,7 @@ body {
   background-color: $base-background-color;
   color: $base-font-color;
   font-family: $base-font-family;
-  font-size: $base-font-size;
+  font-size: $base-font-size * 0.875;
   line-height: $unitless-line-height;
 }
 
@@ -15,7 +15,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: $base-font-size * 2.25; // 16 * 2.25 = 36px
+  font-size: $base-font-size * 1.5; // 16 * 2.25 = 36px
+  font-weight: bold;
 }
 
 h2 {

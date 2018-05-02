@@ -2,7 +2,7 @@
   - localized_cache [project, current_locale] do
     - present project do |project_presenter|
       %li.container.project
-        %h2.project-title
+        %h4.project-title
           = link_to project_path(project) do
             = project.name
         %ul.tags-list
