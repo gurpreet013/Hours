@@ -2,10 +2,11 @@ include TimeSeriesInitializer
 
 class UsersController < ApplicationController
   before_action :authenticate_admin!, if: :current_user
+  before_action :find_resource, only: [:show, :edit, :update, :projects]
   skip_before_action :authenticate_admin!, only: [:show, :edit, :update], if: ->{ current_user.slug.to_s.eql?(params[:id]) }
 
   def show
-    @time_series = time_series_for(resource)
+    @time_series = time_series_for(@user)
   end
 
   def index
@@ -13,11 +14,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
+    # @user = current_user
   end
 
   def update
-    @user = current_user
+    # @user = current_user
     if @user.respond_to?(:unconfirmed_email)
       prev_unconfirmed_email = @user.unconfirmed_email
     end
@@ -28,15 +29,19 @@ class UsersController < ApplicationController
                   else
                     :updated
                   end
-      redirect_to edit_user_path, notice: t(".#{flash_key}")
+      redirect_to edit_user_path(@user), notice: t(".#{flash_key}")
     else
       render :edit
     end
   end
 
+  def projects
+    @all_clients = Client.includes(:projects).all
+  end
+
   private
 
-  def resource
+  def find_resource
     @user ||= User.find_by_slug(params[:id])
   end
 
@@ -46,7 +51,9 @@ class UsersController < ApplicationController
                                  :email,
                                  :password,
                                  :password_confirmation,
-                                 :current_password)
+                                 :current_password,
+                                 role_ids: [],
+                                 project_ids: [])
   end
 
   def update_needs_confirmation?(resource, previous)

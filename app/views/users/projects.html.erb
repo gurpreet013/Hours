@@ -1,0 +1,28 @@
+<div id="main">
+  <div class="main project_access container">
+    <%= form_for @user do |f| %>
+      <h2>Which projects should <span><%= @user.full_name %></span> have access to?</h2>
+
+      <div class="project_list">
+
+        <div class="select_group">
+          <a href="#" id="select_all">Select all projects</a> –
+          <a href="#" id="select_none">Select no project</a>
+        </div>
+        <% @all_clients.each do |client| %>
+          <h3><%= client.name %></h3>
+          <% client.projects.each do |project| %>
+            <%= label_tag project.name %>
+            <%= check_box_tag 'user[project_ids][]', project.id, @user.project_ids.include?(project.id), class: 'project_checkbox' %>
+          <% end %>
+        <% end %>
+      </div>
+      <div>
+        <%= f.button :submit %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<%= javascript_include_tag 'users/projects_assign_manager.js' %>

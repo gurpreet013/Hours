@@ -49,10 +49,15 @@ class User < ActiveRecord::Base
   has_one :account, foreign_key: "owner_id", inverse_of: :owner
   belongs_to :organization, class_name: "Account", inverse_of: :users
   has_many :daily_updates
+  has_many :user_roles, dependent: :destroy
+  has_many :roles, through: :user_roles
+  has_many :daily_updates
   has_many :hours, through: :daily_updates
   has_many :mileages, through: :daily_updates
   has_many :project_users
   has_many :projects, through: :project_users
+
+  after_commit :assign_staff_role, on: :create
 
   scope :by_name, -> { order("lower(last_name)") }
 
@@ -74,4 +79,9 @@ class User < ActiveRecord::Base
   def acronyms
     first_name[0] + last_name[0]
   end
+
+  private
+    def assign_staff_role
+      roles << Role.find_by_name(:staff)
+    end
 end
