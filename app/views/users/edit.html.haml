@@ -21,6 +21,10 @@
               = f.input :password_confirmation, required: false
             .col-md-4.form-group
               = f.input :current_password, hint: t("registration.hint.current_password"), required: true
+            .col-md-4.form-group
+              = f.collection_check_boxes(:role_ids, Role.all, :id, ->(obj){obj.name.humanize}) do |f|
+                = f.check_box
+                = f.label
         .form-actions
           = f.button :submit, t("registration.update_button"), data: { disable_with: t("loader.saving") }
           = link_to t("back"), :back, class: 'btn btn-light'
