@@ -21,18 +21,28 @@
               = f.input :password_confirmation, required: false
             .col-md-4.form-group
               = f.input :current_password, hint: t("registration.hint.current_password"), required: true
-            .col-md-4.form-group
-              = f.collection_check_boxes(:role_ids, Role.all, :id, ->(obj){obj.name.humanize}) do |f|
-                = f.check_box
-                = f.label
-        .form-actions
+          %hr
+          .row
+            .col-md-12
+              %h5.mb-3
+                %strong Role
+            - Role.all.each do |role|
+              .col-md-4.form-group
+                = check_box_tag 'user[role_ids][]', role.id, @user.role_ids.include?(role.id), id: role.name
+                = label_tag role.name, role.name.humanize, class: 'd-inline'
+          %hr
+
+        .form-actions.text-center
           = f.button :submit, t("registration.update_button"), data: { disable_with: t("loader.saving") }
           = link_to t("back"), :back, class: 'btn btn-light'
-      %h1
-        Project access
-      %p
+  %h1.mt-5
+    Project access
+  .row.justify-content-center
+    .col-md-8
+      %p.text-center
         = @user.first_name.humanize
         has access to
         = @user.projects.count
         projects.
-        = link_to 'Change Access', projects_user_path(@user)
+        %br
+        = link_to 'Change Access', projects_user_path(@user), class: 'btn btn-sm btn-outline-secondary mt-3'

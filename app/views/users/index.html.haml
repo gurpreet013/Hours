@@ -26,7 +26,13 @@
                         = t("users.invitation_sent_at",                            |
                           time_ago: time_ago_in_words(user.invitation_created_at)) |
                     %td
-                      = link_to :edit, edit_user_path(user) if user.confirmed?
+                      .btn-group.pull-right.mr-2
+                        .dropdown.dropdown-menu-right
+                          =link_to '', 'javascript:void(0)', class: 'btn btn-sm btn-link dropdown-toggle', data: { toggle: "dropdown" }
+                          .dropdown-menu
+                            = link_to 'Edit', edit_user_path(user), class: 'dropdown-item'
+                            = link_to 'Change Access', projects_user_path(user), class: 'dropdown-item'
+
     .col-md-4
       .invitation-form
         = simple_form_for(User.new, url: user_invitation_path) do |f|
