@@ -220,3 +220,49 @@ h1 {
     height: 35px;
   }
 }
+
+.row-hover {
+  &:hover {
+    background-color: #f7f7f7;
+  }
+  label {
+    cursor: pointer;
+  }
+}
+
+.project_checkbox {
+  position: absolute;
+  opacity: 0;
+  left: 0;
+  top: 0;
+}
+.project_checkbox {
+  + .sublabel {
+    display: block;
+    padding-right: 30px;
+    position: relative;
+    &:after {
+      content: "✓";
+      text-align: center;
+      line-height: 18px;
+      color: transparent;
+      display: block;
+      width: 20px;
+      height: 20px;
+      border: solid 1px #ddd;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      margin-top: -10px;
+      border-radius: 4px;
+    }
+  }
+  &:checked {
+    +.sublabel:after {
+      color: white;
+      background-color: #478c34;
+      border-color: #478c34;
+    }
+  }
+}
+
