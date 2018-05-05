@@ -30,6 +30,7 @@ class Project < ActiveRecord::Base
   has_many :used_tasks, -> { uniq }, through: :hours, source: :category
   has_many :tags, -> { uniq }, through: :hours
   belongs_to :client, touch: true
+  belongs_to :project_manager, class_name: 'User'
 
   scope :by_last_updated, -> { order("projects.updated_at DESC") }
   scope :by_name, -> { order("lower(name)") }

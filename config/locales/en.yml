@@ -172,6 +172,7 @@ en:
       client_missing: If the project is billable it needs a client
     form:
       users: Team Members
+      project_manager: Project Manager
       client: Client
       no_client: No Client
     show:
