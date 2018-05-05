@@ -23,7 +23,6 @@ nl:
     budget: "Budget:"
     category: "Categorie:"
     hours: "Hours:"
-    mileages: "Kilometers"
     from: van
     to: naar
     actions:
@@ -59,8 +58,6 @@ nl:
     attributes:
       hour:
         value: "Uren"
-      mileage:
-        value: "Kilometers"
     errors:
       messages:
         blank: "invoer mag niet leeg zijn"
@@ -182,7 +179,6 @@ nl:
       edit: aanpassen
       edit_entry: Entry bewerken
       hours: Uren
-      mileages: Kilometers
       new: Nieuwe entry
       project: Project
       user_entries: "%{user}s boekingen"
@@ -192,10 +188,8 @@ nl:
     other: "%{user} heeft %{count} uren gespendeerd aan %{category} op %{project}"
   entry_created:
     hours: Uren zijn aangemaakt
-    mileages: Kilometers zijn aangemaakt
   entry_deleted:
     hours: De uren zijn verwijderd
-    mileages: De kilometers zijn verwijderd
   entry_failed: Iets ging mis bij het opslaan van uw uren
   entry_saved: Uren zijn opgeslagen
   helpful:
@@ -269,7 +263,6 @@ nl:
       category: Categorie
       client: Klant
       hours: Uren
-      mileages: Kilometers
       billable: Facturabel
       billed: Gefactureerd
       description: Beschrijving
@@ -366,4 +359,4 @@ nl:
     archived: Gearchiveerde projecten
     not_archived: Actieve projecten
   pages:
-    prices: Prijzen  
+    prices: Prijzen

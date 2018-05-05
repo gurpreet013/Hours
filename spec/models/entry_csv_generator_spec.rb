@@ -3,12 +3,9 @@ require "csv"
 describe EntryCSVGenerator do
   let(:first_entry) { build_stubbed(:hour) }
   let(:second_entry) { build_stubbed(:hour) }
-  let(:third_entry) { build_stubbed(:mileage) }
-  let(:fourth_entry) { build_stubbed(:mileage) }
 
   let(:generator) do
-    EntryCSVGenerator.new([first_entry, second_entry],
-                          [third_entry, fourth_entry])
+    EntryCSVGenerator.new([first_entry, second_entry])
   end
 
   it "generates csv" do

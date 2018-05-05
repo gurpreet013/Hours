@@ -23,7 +23,6 @@ pt-BR:
     budget: "Orçamento:"
     category: "Categoria:"
     hours: "Horas:"
-    mileages: "Quilômetros"
     from: de
     to: para
     actions:
@@ -60,8 +59,6 @@ pt-BR:
     attributes:
       hour:
         value: "Horas"
-      mileage:
-        value: "Milhagens"
     errors:
       messages:
         blank: "não pode ficar em branco"
@@ -176,9 +173,7 @@ pt-BR:
       description: 'Descrição ou #hashtags'
       edit: editar
       edit_hours_entry: Editar Entrada de Horas
-      edit_mileages_entry: Editar Entrada de Quilômetros
       hours: Horas
-      mileages: Quilômetros
       new: Nova Entrada
       project: Projeto
       user_entries: "Entradas de %{user}"
@@ -188,10 +183,8 @@ pt-BR:
     other: "%{user} passou %{count} horas fazendo %{category} em %{project}"
   entry_created:
     hours: Entrada de horas criada com sucesso
-    mileages: Entrada de quilômetros criada com sucesso
   entry_deleted:
     hours: Entrada de horas apagada com sucesso
-    mileages: Entrada de quilômetros apagada com sucesso
   entry_failed: Aconteceu algo de errado ao salvar sua entrada
   entry_saved: Entrada salva com sucesso
   helpful:
@@ -263,7 +256,6 @@ pt-BR:
       category: Categoria
       client: Cliente
       hours: Horas
-      mileages: Quilômetros
       billable: Faturável
       billed: Faturado
       description: Descrição

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180503101233) do
+ActiveRecord::Schema.define(version: 20180505112512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,21 +116,6 @@ ActiveRecord::Schema.define(version: 20180503101233) do
   add_index "hours", ["daily_update_id"], name: "index_hours_on_daily_update_id", using: :btree
   add_index "hours", ["date"], name: "index_hours_on_date", using: :btree
   add_index "hours", ["project_id"], name: "index_hours_on_project_id", using: :btree
-
-  create_table "mileages", force: :cascade do |t|
-    t.integer  "project_id",                      null: false
-    t.integer  "value",                           null: false
-    t.date     "date",                            null: false
-    t.boolean  "billed",          default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "daily_update_id"
-  end
-
-  add_index "mileages", ["billed"], name: "index_mileages_on_billed", using: :btree
-  add_index "mileages", ["daily_update_id"], name: "index_mileages_on_daily_update_id", using: :btree
-  add_index "mileages", ["date"], name: "index_mileages_on_date", using: :btree
-  add_index "mileages", ["project_id"], name: "index_mileages_on_project_id", using: :btree
 
   create_table "project_users", force: :cascade do |t|
     t.integer  "user_id"

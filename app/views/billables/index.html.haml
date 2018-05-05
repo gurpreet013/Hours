@@ -12,6 +12,4 @@
           %h1= project.name
           - if project.hours.exists?(billed: false)
             = render "hours_entries", project: project
-          - if project.mileages.exists?(billed: false)
-            = render "mileages_entries", project: project
       %button#submit-billable-entries-test= t("billables.buttons.bill_selected")

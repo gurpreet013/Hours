@@ -59,7 +59,6 @@ $(document).ready(function() {
   $('.select2').select2();
   $('#hour_project_id').select2();
   $('#hour_category_id').select2();
-  $('#mileage_project_id').select2();
   $('#project_client_id').select2();
 
   if ($('body').hasClass('projects-index')) {
@@ -100,5 +99,3 @@ var enableBillableCheckbox = function () {
   var disable = $("#project_client_id").val() === "";
   $("#project_billable").prop("disabled", disable);
 }
-
-

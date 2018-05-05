@@ -23,7 +23,6 @@ pl:
     budget: "Budżet:"
     category: "Kategoria:"
     hours: "Godziny:"
-    mileages: "Kilometery"
     from: z
     to: do
     actions:
@@ -56,8 +55,6 @@ pl:
     attributes:
       hour:
         value: "Godziny"
-      mileage:
-        value: "Kilometrówka"
     errors:
       models:
         account:
@@ -122,9 +119,7 @@ pl:
       description: 'Opis'
       edit: edytuj
       edit_hours_entry: Edytuj wpis godzinowy
-      edit_mileages_entry: Edytuj wpis kilometrowy
       hours: Godziny
-      mileages: Kilometry
       new: Nowy wpis
       project: Projekt
       user_entries: "Wpisy %{user}"
@@ -134,10 +129,8 @@ pl:
     other: "%{user} spedził %{count} godzinny na %{category} w %{project}"
   entry_created:
     hours: Wpis godzinowy został dodany
-    mileages: Wpis kilometrowy został dodany
   entry_deleted:
     hours: Wpis godzinowy został usuniety
-    mileages: Wpis kilometrowy został usuniety
   entry_failed: Coś poszło nie tak w trakcie zapisu
   entry_saved: Wpis został zapisany
   helpful:
@@ -211,7 +204,6 @@ pl:
       category: Kategoria
       client: Klient
       hours: Godziny
-      mileages: Kilometry
       billable: Billable
       billed: Billed
       description: Opis

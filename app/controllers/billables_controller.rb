@@ -10,9 +10,6 @@ class BillablesController < ApplicationController
       Hour.where(id: params[:hours_to_bill]).update_all("billed = true")
     end
 
-    if params[:mileages_to_bill]
-      Mileage.where(id: params[:mileages_to_bill]).update_all("billed = true")
-    end
     render json: nil, status: 200
   end
 
