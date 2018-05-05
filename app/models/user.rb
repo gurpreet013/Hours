@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
   has_many :hours, through: :daily_updates
   has_many :project_users
   has_many :projects, through: :project_users
+  has_many :managable_projects, class_name: 'Project', foreign_key: :project_manager_id
 
   after_commit :assign_staff_role, on: :create
 
