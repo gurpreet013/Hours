@@ -9,11 +9,9 @@ feature "User Report" do
 
   scenario "views all entries" do
     hour = create(:hour, value: 1000)
-    mileage = create(:mileage, value: 2000)
     visit reports_url(subdomain: subdomain)
 
     expect(page).to have_content(hour.value)
-    expect(page).to have_content(mileage.value)
     expect(page).to have_content(I18n.t("entries.download_csv"))
     expect(page).to have_selector(".info-row")
   end

@@ -47,7 +47,6 @@ describe User do
     it { should have_one :account }
     it { should belong_to :organization }
     it { should have_many :hours }
-    it { should have_many :mileages }
   end
 
   describe "#label" do

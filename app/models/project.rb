@@ -23,7 +23,6 @@ class Project < ActiveRecord::Base
                    uniqueness: { case_sensitive: false }
   validates_with ClientBillableValidator
   has_many :hours
-  has_many :mileages
   has_many :project_users
   has_many :users, through: :project_users
   has_many :category_projects, dependent: :destroy
@@ -54,8 +53,7 @@ class Project < ActiveRecord::Base
   end
 
   def has_billable_entries?
-    hours.exists?(billed: false) ||
-      mileages.exists?(billed: false)
+    hours.exists?(billed: false)
   end
 
   private

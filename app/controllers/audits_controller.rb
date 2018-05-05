@@ -11,8 +11,6 @@ class AuditsController < ApplicationController
     case
     when params.key?(:hour_id)
       return hour_log
-    when params.key?(:mileage_id)
-      return mileage_log
     when params.key?(:project_id)
       return project_log
     end
@@ -20,10 +18,6 @@ class AuditsController < ApplicationController
 
   def hour_log
     Hour.find(params[:hour_id]).audits
-  end
-
-  def mileage_log
-    Mileage.find(params[:mileage_id]).audits
   end
 
   def project_log

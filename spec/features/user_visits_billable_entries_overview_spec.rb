@@ -50,23 +50,4 @@ feature "User manages billables" do
     visit billables_url(subdomain: subdomain)
     expect(page.body).to_not have_selector(".bill_checkbox")
   end
-
-  scenario "bill a mileages entry" do
-    client = create(:client)
-    project = create(:project, client: client, billable: true)
-    user = create(:user)
-    entry = create(
-      :mileage, project: project, user: user, value: 2, billed: false
-    )
-
-    visit billables_url(subdomain: subdomain)
-
-    find(:css, ".bill_checkbox").set(true)
-    find(:css, "#submit-billable-entries-test").click
-
-    visit billables_url(subdomain: subdomain)
-
-    expect(entry.reload.billed).to eq(true)
-    expect(page.body).to_not have_selector(".bill_checkbox")
-  end
 end

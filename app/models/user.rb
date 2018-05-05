@@ -53,7 +53,6 @@ class User < ActiveRecord::Base
   has_many :roles, through: :user_roles
   has_many :daily_updates
   has_many :hours, through: :daily_updates
-  has_many :mileages, through: :daily_updates
   has_many :project_users
   has_many :projects, through: :project_users
 

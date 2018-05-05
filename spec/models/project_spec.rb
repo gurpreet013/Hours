@@ -36,7 +36,6 @@ describe Project do
     it { should have_many :users }
     it { should have_many :categories }
     it { should have_many :hours }
-    it { should have_many :mileages }
     it { should have_many :tags }
     it { should belong_to :client }
   end

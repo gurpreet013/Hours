@@ -23,7 +23,6 @@ en:
     budget: "Budget:"
     category: "Category:"
     hours: "Hours:"
-    mileages: "Kilometers"
     from: from
     to: to
     actions:
@@ -56,8 +55,6 @@ en:
     attributes:
       hour:
         value: "Hours"
-      mileage:
-        value: "Mileages"
     errors:
       models:
         account:
@@ -122,9 +119,7 @@ en:
       description: 'Description or #hashtags'
       edit: edit
       edit_hours_entry: Edit Hours Entry
-      edit_mileages_entry: Edit Kilometers Entry
       hours: Hours
-      mileages: Kilometers
       new: New Entry
       project: Project
       user_entries: "%{user}'s entries"
@@ -134,10 +129,8 @@ en:
     other: "%{user} spent %{count} hours doing %{category} on %{project}"
   entry_created:
     hours: Hours entry successfully created
-    mileages: Kilometers entry successfully created
   entry_deleted:
     hours: Hours Entry successfully deleted
-    mileages: Kilometers Entry successfully deleted
   entry_failed: Something went wrong saving your entry
   entry_saved: Entry successfully saved
   helpful:
@@ -212,7 +205,6 @@ en:
       category: Category
       client: Client
       hours: Hours
-      mileages: Kilometers
       billable: Billable
       billed: Billed
       description: Description
