@@ -7,10 +7,8 @@
 #  category_id :integer          not null
 #  user_id     :integer          not null
 #  value       :integer          not null
-#  date        :date             not null
 #  created_at  :datetime
 #  updated_at  :datetime
-#  description :string
 #  billed      :boolean          default("false")
 #
 
@@ -27,13 +25,15 @@ class Hour < Entry
   accepts_nested_attributes_for :taggings
 
   scope :by_last_created_at, -> { order("created_at DESC") }
-  scope :by_date, -> { order("date DESC") }
+  scope :by_date, -> { joins(:daily_update).order("daily_updates.date DESC") }
   scope :billable, -> { where("billable").joins(:project) }
   scope :with_clients, -> {
     where.not("projects.client_id" => nil).joins(:project)
   }
 
   before_save :set_tags_from_description
+
+  delegate :description, :date, to: :daily_update
 
   def tag_list
     tags.map(&:name).join(", ")
