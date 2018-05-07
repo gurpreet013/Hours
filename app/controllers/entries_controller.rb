@@ -5,7 +5,8 @@ class EntriesController < ApplicationController
 
   def index
     @user = User.find_by_slug(params[:user_id])
-    @hours_entries = @user.hours.by_date.page(params[:hours_pages]).per(20)
+    @hours_entries = @user.hours.includes(:daily_update, :project, :category).by_date.page(params[:hours_pages]).per(20)
+    @grouped_hours_entires_with_audit_history = @user.hours.joins(:audits).where(id: @hours_entries.map(&:id)).group('hours.id').count
     respond_to do |format|
       format.html { @hours_entries }
       format.csv do

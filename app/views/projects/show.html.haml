@@ -14,7 +14,7 @@
         %tr
           %th= t('project.table_head.tag')
           %th= t('project.table_head.hours')
-        - @project.tags.each do |tag|
+        - @project.tags.includes(:hours).each do |tag|
           %tr
             %td= link_to tag.name, tag_path(tag)
             %td= EntryStats.new(tag.hours, @project).hours_for_subject

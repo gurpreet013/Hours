@@ -22,7 +22,7 @@ class ProjectPresenter
   private
 
   def sorted_categories
-    @project.sorted_categories
+    @sorted_categories ||= @project.sorted_categories
   end
 
   def categories_with_remainder
