@@ -1,5 +1,5 @@
 class BillablesController < ApplicationController
-  before_action :authenticate_admin!, if: :current_user
+  authorize_resource class: false
 
   def index
     @projects = projects_with_billable_entries

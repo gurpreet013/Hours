@@ -1,4 +1,6 @@
 class HoursController < EntriesController
+  authorize_resource
+
   def update
     resource.daily_update = current_user.daily_updates.find_or_create_by(date: parsed_date(:hour))
     if resource.update_attributes(entry_params)

@@ -12,6 +12,7 @@ gem "high_voltage"
 gem "jquery-rails", "~> 4.0"
 gem "neat"
 gem "bitters"
+gem "cancancan"
 gem "pg"
 gem "rack-timeout"
 gem 'tickspot-rb', require: 'tickspot'

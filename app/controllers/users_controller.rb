@@ -1,9 +1,8 @@
 include TimeSeriesInitializer
 
 class UsersController < ApplicationController
-  before_action :authenticate_admin!, if: :current_user
+  authorize_resource
   before_action :find_resource, only: [:show, :edit, :update, :projects]
-  skip_before_action :authenticate_admin!, only: [:show, :edit, :update], if: ->{ current_user.slug.to_s.eql?(params[:id]) }
 
   def show
     @time_series = time_series_for(@user)
@@ -14,11 +13,9 @@ class UsersController < ApplicationController
   end
 
   def edit
-    # @user = current_user
   end
 
   def update
-    # @user = current_user
     if @user.respond_to?(:unconfirmed_email)
       prev_unconfirmed_email = @user.unconfirmed_email
     end

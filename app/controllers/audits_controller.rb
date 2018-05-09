@@ -1,6 +1,8 @@
 require "audit_history"
 
 class AuditsController < ApplicationController
+  authorize_resource class: false
+  
   def index
     @history = AuditHistory.new(audit_log)
   end

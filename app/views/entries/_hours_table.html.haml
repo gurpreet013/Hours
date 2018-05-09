@@ -15,7 +15,7 @@
         %td.date
           %div.weekday= t("weekdays." + entry.date.strftime('%A').downcase)
           = I18n.l (entry.date)
-        %td.project= link_to entry.project.name, entry.project
+        %td.project= link_to_if(can?(:update, entry.project), entry.project.name, entry.project)
         %td.hours.center= entry.value
         %td.category.hide-for-mobile
           %span.color{:style => "background-color:#{entry.category.name.pastel_color};"}

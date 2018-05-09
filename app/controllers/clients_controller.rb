@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  before_action :authenticate_admin!, if: :current_user
+  authorize_resource
 
   def show
     @projects = resource.projects.by_last_updated.page(params[:page]).per(3)

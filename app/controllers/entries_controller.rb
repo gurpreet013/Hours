@@ -1,4 +1,6 @@
 class EntriesController < ApplicationController
+  authorize_resource
+
   include CSVDownload
 
   DATE_FORMAT = "%d/%m/%Y".freeze
