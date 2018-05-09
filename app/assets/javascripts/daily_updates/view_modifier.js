@@ -114,4 +114,5 @@ DailyUpdatesViewModifier.prototype.toggleAddCategoryIfRequired = function(projec
 DailyUpdatesViewModifier.prototype.updateData = function(projectsHash, dateRange) {
   this.projectsHash = projectsHash;
   this.dateRange = dateRange;
+  this.prepareCategoriesLeftData();
 };
