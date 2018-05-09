@@ -32,7 +32,7 @@ BulkUpdateFormManager.prototype.prepareHoursData = function() {
     hourInput = $(hourInput);
     var data = hourInput.data(),
         value = hourInput.val(),
-        hourData = { id: data.hourId, category_id: data.categoryId, project_id: data.projectId, date: data.date, value: value }
+        hourData = { id: data.hourId, category_id: data.categoryId, project_id: data.projectId, value: value }
 
     hoursHash[data.date] = hoursHash[data.date] ? hoursHash[data.date] : []
     hoursHash[data.date].push(hourData);

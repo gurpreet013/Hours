@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180507113658) do
+ActiveRecord::Schema.define(version: 20180509132425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,12 +150,12 @@ ActiveRecord::Schema.define(version: 20180507113658) do
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
-    t.integer  "hour_id"
+    t.integer  "daily_update_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "taggings", ["hour_id"], name: "index_taggings_on_hour_id", using: :btree
+  add_index "taggings", ["daily_update_id"], name: "index_taggings_on_daily_update_id", using: :btree
   add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
 
   create_table "tags", force: :cascade do |t|

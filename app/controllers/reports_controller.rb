@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  authorize_resource class: false
+  authorize_resource
 
   include CSVDownload
 

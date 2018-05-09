@@ -1,8 +1,6 @@
 class Entry < ActiveRecord::Base
   self.abstract_class = true
 
-  include Twitter::Extractor
-
   validates :daily_update, :project, :date, presence: true
   validates :value, presence: true, numericality: { greater_than: 0,
                                                     only_integer: true }

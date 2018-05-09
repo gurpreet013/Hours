@@ -19,15 +19,24 @@
                 = render "application/avatar", user: current_user, easter: easter?
                 %span.user-name= current_user.first_name
               %ul
-                %li= link_to t("titles.categories.index"), categories_path #if can? :read, Category
-                %li= link_to t("titles.users.index"), users_path #if can? :read, User
-                %li= link_to t("titles.billables.index"), billables_path
-                %li= link_to t("titles.projects.index"), projects_path #if can? :read, Project
-                %li= link_to t("titles.clients.index"), clients_path #if can? :read, Client
-                %li= link_to t("titles.archives.index"), archives_path
-                %li= link_to t("titles.reports.index"), reports_path
-                %li= link_to t("navbar.dropdown.edit_user"), edit_user_path(current_user) #if can? :edit, current_user
-                %li= link_to t("titles.accounts.edit"), edit_account_path #if can? :edit, Account
+                - if can? :read, Category
+                  %li= link_to(t("titles.categories.index"), categories_path)
+                - if can? :read, User
+                  %li= link_to(t("titles.users.index"), users_path)
+                - if can? :read, :billable
+                  %li= link_to(t("titles.billables.index"), billables_path)
+                - if can? :read, Project
+                  %li= link_to(t("titles.projects.index"), projects_path)
+                - if can? :read, Client
+                  %li= link_to(t("titles.clients.index"), clients_path)
+                - if can? :read, :archive
+                  %li= link_to(t("titles.archives.index"), archives_path)
+                - if can? :read, Report
+                  %li= link_to(t("titles.reports.index"), reports_path)
+                - if can? :edit, current_user
+                  %li= link_to(t("navbar.dropdown.edit_user"), edit_user_path(current_user))
+                - if can? :edit, Account
+                  %li= link_to(t("titles.accounts.edit"), edit_account_path)
                 - if Hours.helpful_enabled?
                   %li
                     .modal

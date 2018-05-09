@@ -17,12 +17,7 @@ class Hour < Entry
 
   belongs_to :category
 
-  has_many :taggings, inverse_of: :hour
-  has_many :tags, through: :taggings
-
   validates :category, presence: true
-
-  accepts_nested_attributes_for :taggings
 
   scope :by_last_created_at, -> { order("created_at DESC") }
   scope :by_date, -> { joins(:daily_update).order("daily_updates.date DESC") }
@@ -30,8 +25,6 @@ class Hour < Entry
   scope :with_clients, -> {
     where.not("projects.client_id" => nil).joins(:project)
   }
-
-  before_save :set_tags_from_description
 
   delegate :description, :date, to: :daily_update
 
@@ -41,17 +34,5 @@ class Hour < Entry
 
   def self.query(params, includes = nil)
     EntryQuery.new(self.includes(includes).by_date, params, "hours").filter
-  end
-
-  private
-
-  def set_tags_from_description
-    tagnames = extract_hashtags(description)
-    self.tags = tagnames.map do |tagname|
-      Tag.where("name ILIKE ?", tagname.strip).first_or_initialize.tap do |tag|
-        tag.name = tagname.strip
-        tag.save!
-      end
-    end
   end
 end
