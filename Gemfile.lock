@@ -616,6 +616,7 @@ GEM
       terminal-table (~> 1.4)
     builder (3.2.3)
     byebug (10.0.2)
+    cancancan (2.2.0)
     case_transform (0.2)
       activesupport
     climate_control (0.2.0)
@@ -897,6 +898,7 @@ DEPENDENCIES
   bourbon
   brakeman
   byebug
+  cancancan
   coffee-rails
   dalli
   database_cleaner

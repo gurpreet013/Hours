@@ -1,8 +1,8 @@
 include TimeSeriesInitializer
 
 class ProjectsController < ApplicationController
-  before_action :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy], if: :current_user
-
+  authorize_resource
+  
   def index
     @projects = current_user.projects.includes(:client, hours: :category).unarchived.by_last_updated.page(params[:page]).per(7)
   end

@@ -4,6 +4,7 @@
     .col-auto
       %h1= title
     .col-auto
-      %div= link_to 'New Project', new_project_path, class: 'btn btn-outline-success btn-sm'
+      - if can? :create, Project
+        %div= link_to 'New Project', new_project_path, class: 'btn btn-outline-success btn-sm'
   %ul.categories-overview= render partial: "project", collection: @projects
 = paginate @projects

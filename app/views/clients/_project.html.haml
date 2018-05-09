@@ -2,8 +2,8 @@
   - localized_cache [project, current_locale] do
     - present project do |project_presenter|
       %li.container.project
-        %h4.project-title
-          = link_to project_path(project) do
+        %h2.project-title
+          = link_to_if can?(:read, project), project_path(project) do
             = project.name
         %ul.tags-list
           - project.tags.last(5).each do |tag|

@@ -1,6 +1,7 @@
 class DailyUpdatesController < ApplicationController
   before_action :set_date_range, only: [:index]
-
+  authorize_resource
+  
   def index
     @users_with_daily_updates = users_scope.eager_load(daily_updates: :hours).merge(DailyUpdate.between(@from, @to)).select(:id, :first_name, :last_name)
     @users_with_daily_updates = @users_with_daily_updates.presence || [current_user_or_impersonated_user]
