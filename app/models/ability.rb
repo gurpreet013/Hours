@@ -1,11 +1,11 @@
 class Ability
   include CanCan::Ability
 
-  attr_reader :user
+  attr_reader :current_user
 
-  def initialize(user)
-    @user = user
-    user.roles.pluck(:name).each do |role|
+  def initialize(current_user)
+    @current_user = current_user
+    current_user.roles.pluck(:name).each do |role|
       send("#{role}_abilities")
     end
 
@@ -21,11 +21,12 @@ class Ability
 
     def staff_abilities
       can :read, Entry
+      can :read, Project, users: { id: current_user.id }
       can [:read, :bulk_update], DailyUpdate
-      can [:read, :update, :destroy], Hour, daily_update: { user_id: user.id }
-      can [:read, :destroy], Entry, daily_update: { user_id: user.id }
-      can [:show, :update, :edit], User do |current_user|
-        user.id == current_user.id
+      can [:read, :update, :destroy], Hour, daily_update: { user_id: current_user.id }
+      can [:read, :destroy], Entry, daily_update: { current_user_id: current_user.id }
+      can [:show, :update, :edit], User do |user|
+        current_user.id == user.id
       end
     end
 end

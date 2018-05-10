@@ -11,8 +11,9 @@
             = link_to tag_path(tag) do
               %li.tag= tag.name
         - if project.client
-          = link_to client_path(project.client), class: "clients-header" do
-            = client_title(project.client)
+          = link_to_if(can?(:read, project.client), client_title(project.client), client_path(project.client), class: "clients-header") do
+            %span.clients-header
+              = client_title(project.client)
         - if project.budget
           .project-budget
             = t(:budget_html, budget_left: project.budget_status, budget: project.budget)

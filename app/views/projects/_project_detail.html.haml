@@ -3,12 +3,13 @@
     %header
       %div.actions
         %div
-          = link_to edit_project_path(project) do
-            = t("project.show.edit_link")
+          - if can? :edit, project
+            = link_to edit_project_path(project) do
+              = t("project.show.edit_link")
       = link_to project_path(project) do
         %h2= project.name
       - if project.client
-        = link_to client_path(project.client), class: "clients-header" do
+        = link_to_if(can?(:read, project.client), client_title(project.client), client_path(project.client), class: "clients-header") do
           = client_title(project.client)
       - if project.budget
         .project-budget

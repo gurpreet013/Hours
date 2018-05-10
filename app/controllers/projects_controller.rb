@@ -2,9 +2,9 @@ include TimeSeriesInitializer
 
 class ProjectsController < ApplicationController
   authorize_resource
-  
+
   def index
-    @projects = current_user.projects.includes(:client, hours: :category).unarchived.by_last_updated.page(params[:page]).per(7)
+    @projects = Project.accessible_by(current_ability).includes(:client, hours: :category).unarchived.by_last_updated.page(params[:page]).per(7)
   end
 
   def show
