@@ -17,10 +17,10 @@ class Tag < ActiveRecord::Base
                    uniqueness: { case_sensitive: false }
 
   has_many :taggings
-  has_many :hours, through: :taggings
+  has_many :daily_updates, through: :taggings
+  has_many :hours, through: :daily_updates
   has_many :projects, -> { uniq }, through: :hours
-  has_many :users, -> { uniq }, through: :hours
-  belongs_to :project
+  has_many :users, -> { uniq }, through: :daily_updates
 
   def self.list
     Tag.order(:name).pluck(:name)

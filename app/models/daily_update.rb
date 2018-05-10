@@ -29,6 +29,10 @@ class DailyUpdate < ActiveRecord::Base
     !persisted && attributes['value'].to_i == 0
   end
 
+  def tag_list
+    tags.map(&:name).join(", ")
+  end
+
   private
 
     def set_tags_from_description

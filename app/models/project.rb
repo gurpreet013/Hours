@@ -28,7 +28,8 @@ class Project < ActiveRecord::Base
   has_many :category_projects, dependent: :destroy
   has_many :categories, through: :category_projects
   has_many :used_tasks, -> { uniq }, through: :hours, source: :category
-  has_many :tags, -> { uniq }, through: :hours
+  has_many :daily_updates, through: :hours
+  has_many :tags, -> { uniq }, through: :daily_updates
   belongs_to :client, touch: true
   belongs_to :project_manager, class_name: 'User'
 

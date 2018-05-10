@@ -28,10 +28,6 @@ class Hour < Entry
 
   delegate :description, :date, to: :daily_update
 
-  def tag_list
-    tags.map(&:name).join(", ")
-  end
-
   def self.query(params, includes = nil)
     EntryQuery.new(self.includes(includes).by_date, params, "hours").filter
   end
