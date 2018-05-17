@@ -22,27 +22,29 @@
             .col-md-4.form-group
               = f.input :current_password, hint: t("registration.hint.current_password"), required: true
           %hr
-          .row
-            .col-md-12
-              %h5.mb-3
-                %strong Role
-            - Role.all.each do |role|
-              .col-md-4.form-group
-                = check_box_tag 'user[role_ids][]', role.id, @user.role_ids.include?(role.id), id: role.name
-                = label_tag role.name, role.name.humanize, class: 'd-inline'
-          %hr
+          - if can? :manage, UserRole
+            .row
+              .col-md-12
+                %h5.mb-3
+                  %strong Role
+              - Role.all.each do |role|
+                .col-md-4.form-group
+                  = check_box_tag 'user[role_ids][]', role.id, @user.role_ids.include?(role.id), id: role.name
+                  = label_tag role.name, role.name.humanize, class: 'd-inline'
+            %hr
 
         .form-actions.text-center
           = f.button :submit, t("registration.update_button"), data: { disable_with: t("loader.saving") }
           = link_to t("back"), :back, class: 'btn btn-light'
-  %h1.mt-5
-    Project access
-  .row.justify-content-center
-    .col-md-8
-      %p.text-center
-        = @user.first_name.humanize
-        has access to
-        = @user.projects.count
-        projects.
-        %br
-        = link_to 'Change Access', projects_user_path(@user), class: 'btn btn-sm btn-outline-secondary mt-3'
+  - if can? :manage, ProjectUser
+    %h1.mt-5
+      Project access
+    .row.justify-content-center
+      .col-md-8
+        %p.text-center
+          = @user.first_name.humanize
+          has access to
+          = @user.projects.count
+          projects.
+          %br
+          = link_to 'Change Access', projects_user_path(@user), class: 'btn btn-sm btn-outline-secondary mt-3'

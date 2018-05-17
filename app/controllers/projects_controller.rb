@@ -1,6 +1,7 @@
 include TimeSeriesInitializer
 
 class ProjectsController < ApplicationController
+  before_action :load_resource, only: [:show, :edit, :update]
   authorize_resource
 
   def index
@@ -8,11 +9,11 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @time_series = time_series_for(resource)
+    @time_series = time_series_for(@project)
   end
 
   def edit
-    resource
+    @project
   end
 
   def new
@@ -29,8 +30,8 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    if resource.update_attributes(project_params)
-      redirect_to project_path(resource), notice: t(:project_updated)
+    if @project.update_attributes(project_params)
+      redirect_to project_path(@project), notice: t(:project_updated)
     else
       render action: "edit"
     end
@@ -38,7 +39,7 @@ class ProjectsController < ApplicationController
 
   private
 
-  def resource
+  def load_resource
     @project ||= Project.find_by_slug(params[:id])
   end
 

@@ -60,6 +60,7 @@ class User < ActiveRecord::Base
   after_commit :assign_staff_role, on: :create
 
   scope :by_name, -> { order("lower(last_name)") }
+  scope :project_managers, -> { joins(:roles).where(roles: { name: :project_manager }).distinct }
 
   def full_name
     "#{first_name} #{last_name}"

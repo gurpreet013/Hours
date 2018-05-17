@@ -24,7 +24,7 @@ class Ability
       can :all_timecards, DailyUpdate
       can :read, Report
       can :read, User, projects: { project_manager_id: current_user.id }
-      can :update, User do |user|
+      can [:impersonate, :update], User do |user|
         user.projects.where(project_manager_id: current_user.id).exists?
       end
     end

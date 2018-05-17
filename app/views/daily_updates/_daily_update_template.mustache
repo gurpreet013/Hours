@@ -16,14 +16,14 @@
         </p>
       </div>
       {{^readonly}}
-        <% if current_user.admin? %>
+        <% if can? :impersonate, User %>
           <div class='col-md-4'>
             <h6 class="text-right mb-1">
               <small>
                 <%= link_to 'Back to My Timesheet', root_url %>
               </small>
             </h6>
-            <%= select_tag :user_id, options_from_collection_for_select(User.all, :slug, :name, params[:slug]), include_blank: 'Switch Person', data: { href: daily_updates_path }, class: 'custom-select mb-3 input-group-append'  %>
+            <%= select_tag :user_id, options_from_collection_for_select(User.accessible_by(current_ability).all, :slug, :name, params[:slug]), include_blank: 'Switch Person', data: { href: daily_updates_path }, class: 'custom-select mb-3 input-group-append'  %>
           </div>
         <% end %>
       {{/readonly}}
