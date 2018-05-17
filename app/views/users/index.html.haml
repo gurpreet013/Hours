@@ -19,7 +19,7 @@
                 - @users.each do |user|
                   %tr
                     %td
-                      = link_to user.full_name, user_path(user) if user.confirmed?
+                      = link_to_if(can?(:show, user), user.full_name, user_path(user)) if user.confirmed?
                     %td= user.email
                     %td
                       - unless user.accepted_or_not_invited?
@@ -28,10 +28,13 @@
                     %td
                       .btn-group.pull-right.mr-2
                         .dropdown.dropdown-menu-right
-                          =link_to '', 'javascript:void(0)', class: 'btn btn-sm btn-link dropdown-toggle', data: { toggle: "dropdown" }
-                          .dropdown-menu
-                            = link_to 'Edit', edit_user_path(user), class: 'dropdown-item'
-                            = link_to 'Change Access', projects_user_path(user), class: 'dropdown-item'
+                          - if can? :edit, user
+                            =link_to '', 'javascript:void(0)', class: 'btn btn-sm btn-link dropdown-toggle', data: { toggle: "dropdown" }
+                            .dropdown-menu
+                              - if can? :edit, user
+                                = link_to 'Edit', edit_user_path(user), class: 'dropdown-item'
+                              - if can? :edit, user
+                                = link_to 'Change Access', projects_user_path(user), class: 'dropdown-item'
 
     .col-md-4
       .invitation-form
