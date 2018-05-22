@@ -23,6 +23,7 @@
 //= require bootstrap.bundle.min.js
 //= require sweetalert.min.js
 //= require charts
+//= require vue-development
 
 
 var Hours = Hours || {

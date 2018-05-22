@@ -9,7 +9,15 @@ function DailyUpdatesViewBuilder(data, dateRange, options) {
 }
 
 DailyUpdatesViewBuilder.prototype.generate = function() {
-  this.showMustacheTemplate('#daily_update_template', this.templateData(), this.target);
+  this.appData = this.templateData();
+  if(window.location.pathname === '/daily_updates/all_timecards') {
+    this.showMustacheTemplate('#daily_update_template', this.templateData(), this.target);
+  } else {
+    var dailyTemplate = new Vue({
+      el: this.target,
+      data: this.appData
+    });
+  }
   this.changeWeekHeaderHtml();
 };
 

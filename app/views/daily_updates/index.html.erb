@@ -1,6 +1,83 @@
 <div class='container'>
   <div class="parent-container <%= current_user_or_impersonated_user.slug %>" data-slug='<%= current_user_or_impersonated_user.slug %>'>
     <div id='daily_entry_template'>
+      <div :id='userSlug'>
+        <div class="row justify-content-between align-items-end">
+          <div class="col-md-auto" :data-readonly='readonly'>
+            <h1>{{userFullName}}&#8217;s <span class="text-secondary">Weekly Timesheet</span></h1>
+            <h5 :data-from='currentWeek.from' :data-to='currentWeek.to' :data-slug='currentWeek.userSlug' class='current_week'></h3>
+            <p class="week-nav">
+              <a href='javascript:void(0)' class='previous_week' :data-slug='previousWeek.userSlug' :data-from='previousWeek.from' :data-to='previousWeek.to'> Previous week | </a>
+              <a href='javascript:void(0)' class='next_week' :data-slug='nextWeek.userSlug' :data-from='nextWeek.from' :data-to='nextWeek.to'> Next week</a>
+            </p>
+          </div>
+          <div v-if='!readonly'>
+            <% if can? :impersonate, User %>
+              <div class='col-md-4'>
+                <h6 class="text-right mb-1">
+                  <small>
+                    <%= link_to 'Back to My Timesheet', root_url %>
+                  </small>
+                </h6>
+                <%= select_tag :user_id, options_from_collection_for_select(User.accessible_by(current_ability).all, :slug, :name, params[:slug]), include_blank: 'Switch Person', data: { href: daily_updates_path }, class: 'custom-select mb-3 input-group-append'  %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <table class='table table-sm table-bordered table-hover'>
+          <thead>
+            <tr class='daily-update-header'>
+              <th class="align-middle">
+                Projects
+              </th>
+              <th class="text-center" v-for="date in dates">
+                {{date.value}}<br><small>{{date.dayName}}</small>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          <template v-for='project in projects'>
+            <tr class='project-row'>
+              <th colspan='8'>
+                <div class="row justify-content-between align-items-center ml-0 mr-0">
+                  <div class="col-auto pl-0">
+                  {{project.name}}
+                  </div>
+                  <div class="col-auto pr-0" v-if='!readonly'>
+                    <span class='add_category btn btn-secondary btn-sm' :data-project-id='project.id'>Add Task</span>
+                  </div>
+                </div>
+              </th>
+            </tr>
+            <tr :data-project-id='category.project_id' v-for='category in project.currentWeekCategories'>
+              <td v-if='category.name'>
+                <small><b>{{category.name}}</b></small>
+              </td>
+              <td v-else class='scrollable-dropdown-menu' :data-project-id='category.project_id'>
+                <input id="category_input" class='form-control-plaintext category-td form-control-sm' type="text" placeholder="Categories">
+              </td>
+              <td :class='hour.minusRequiredClass' v-for='hour in category.hours'>
+                <a href="javascript:void(0);" v-if='hour.minusRequiredClass' class='minus-row text-danger pull-right'><i class="fa fa-minus-circle"></i></a>
+                <span v-if='hour.readonly'>{{hour.value}}</span>
+                <input type='number' v-else name='hour.hoursName' class='form-control-plaintext hours-td form-control-sm form-control' :data-project-id='hour.project_id' :data-category-id='hour.category_id' :data-hour-id='hour.id' :data-date='hour.date' :value='hour.value'/>
+              </td>
+            </tr>
+          </template>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>
+                <small>
+                  <b>
+                    Description
+                  </b>
+                </small>
+              </td>
+              <td v-for='dailyUpdate in dailyUpdates'><textarea class='td-description form-control form-control-sm' :name='dailyUpdate.descriptionName' :data-date='dailyUpdate.date'>{{dailyUpdate.description}}</textarea></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>
     <div class='text-center'>
       <button class="submit btn btn-success">Save</button>
